@@ -138,21 +138,25 @@
   .text-on-surface { color: #1A1A1A !important; }
   .text-on-surface-variant { color: #737373 !important; }
 </style><link rel="stylesheet" href="assets/motion.css"/>
-<script src="assets/shell.js"></script>
 <script src="assets/motion.js"></script>
 </head>
 <body class="bg-background text-on-surface antialiased min-h-screen flex selection:bg-secondary-fixed selection:text-primary">
-<!-- Fixed Left Sidebar -->
-<aside class="fixed top-0 left-0 h-screen w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col justify-between z-30 shrink-0 whitespace-nowrap">
+<!-- Mobile Drawer Backdrop -->
+<div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity duration-200 opacity-0" aria-hidden="true"></div>
+<!-- Left Navigation Sidebar -->
+<aside class="fixed top-0 left-0 h-screen w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col justify-between z-50 shrink-0 whitespace-nowrap transition-transform duration-200 -translate-x-full lg:translate-x-0" id="sidebar-nav">
 <div class="flex flex-col">
 <!-- Brand Header -->
-<div class="px-6 pt-5 pb-5 border-b border-outline-variant/40">
+<div class="px-6 pt-5 pb-5 border-b border-outline-variant/40 flex items-center justify-between">
   <div class="flex items-center gap-3">
     <div class="w-9 h-9 rounded-xl bg-primary-container text-white flex items-center justify-center font-headline-sm text-headline-sm font-semibold" style="background-color: #FF7A00 !important; color: #FFFFFF !important;">
       B
     </div>
     <h1 class="text-headline-sm font-headline-sm text-on-surface font-semibold tracking-tight">BarberHub POS</h1>
   </div>
+  <button id="sidebar-close-btn" class="lg:hidden p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors ml-auto flex items-center justify-center cursor-pointer" aria-label="Tutup Menu">
+    <span class="material-symbols-outlined text-[20px]">close</span>
+  </button>
 </div>
 <!-- Navigation Links with Collapsible Accordions -->
 <nav class="px-4 py-5 space-y-1.5">
@@ -191,20 +195,27 @@
 </div>
 </aside>
 <!-- Main View Container -->
-<div class="pl-64 flex-1 flex flex-col min-h-screen">
+<div class="pl-0 lg:pl-64 flex-1 flex flex-col min-h-screen w-full min-w-0">
 <!-- Top Header -->
-<header class="h-16 bg-surface-container-lowest border-b border-outline-variant/60 px-8 flex items-center sticky top-0 z-20">
-  <nav class="flex items-center gap-2 text-[14px]">
-    <span class="text-[#737373] font-normal">BarberHub POS</span>
-    <span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span>
-    <span class="text-[#1A1A1A] font-medium">Dashboard</span>
-  </nav>
+<header class="h-16 bg-surface-container-lowest border-b border-outline-variant/60 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-20">
+  <div class="flex items-center gap-2">
+    <button id="mobile-menu-btn" class="lg:hidden p-2 -ml-2 rounded-lg text-on-surface hover:bg-surface-container-low transition-colors flex items-center justify-center shrink-0 cursor-pointer" aria-label="Buka Menu">
+      <span class="material-symbols-outlined text-[24px]">menu</span>
+    </button>
+    <nav class="flex items-center gap-1.5 sm:gap-2 text-[13px] sm:text-[14px]">
+      <span class="text-[#737373] font-normal truncate">BarberHub POS</span>
+      <span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span>
+      <span id="breadcrumb-page-name" class="text-[#1A1A1A] font-medium truncate">Dashboard</span>
+    </nav>
+  </div>
+  <div id="topbar-actions" class="flex items-center gap-3"></div>
 </header>
+<div id="page-content" class="flex-1 flex flex-col w-full min-w-0 transition-opacity duration-150">
 <!-- Main Content Canvas (Max 1440px) -->
-<main class="p-8 max-w-[1440px] w-full mx-auto space-y-8 flex-1">
+<main class="p-4 sm:p-6 lg:p-8 max-w-[1440px] w-full mx-auto space-y-6 sm:space-y-8 flex-1">
   <!-- A. Ringkasan Harian (4 Kartu Sejajar) -->
   <section>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5"><!-- Kartu 1 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5"><!-- Kartu 1 -->
 <div class="relative overflow-hidden bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-5 custom-shadow-card flex flex-col justify-between h-[132px] transition-all">
   <div class="flex items-center justify-between">
     <span class="text-label-md font-label-md text-on-surface-variant font-medium">Omzet Hari Ini</span>
@@ -251,16 +262,17 @@
   </section>
 
   <!-- Grid 2 Kolom untuk Stok Menipis & Transaksi Terbaru -->
-  <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 items-start">
     <!-- B. Bagian Stok Menipis (5 Kolom pada 12-col grid) -->
-    <section class="xl:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-card p-6 flex flex-col"><div class="flex items-center justify-between pb-4 border-b border-outline-variant/60">
-  <h3 class="text-headline-sm font-headline-sm text-on-surface tracking-tight">Stok Menipis</h3>
-  <a class="text-label-md font-label-md text-primary-container hover:text-secondary font-medium transition-colors hover:underline" href="#">
-    Lihat Semua Produk
-  </a>
-</div>
-<div class="overflow-x-auto mt-2">
-  <table class="w-full text-left border-collapse">
+    <section class="xl:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-card p-4 sm:p-6 flex flex-col">
+      <div class="flex items-center justify-between pb-4 border-b border-outline-variant/60">
+        <h3 class="text-headline-sm font-headline-sm text-on-surface tracking-tight">Stok Menipis</h3>
+        <a class="text-label-md font-label-md text-primary-container hover:text-secondary font-medium transition-colors hover:underline" href="#">
+          Lihat Semua Produk
+        </a>
+      </div>
+      <div class="overflow-x-auto mt-2">
+        <table class="w-full text-left border-collapse min-w-[320px]">
     <thead>
       <tr class="border-b border-outline-variant/40 text-label-sm font-label-sm text-outline">
         <th class="py-3 px-2 font-medium">Produk</th>
@@ -314,13 +326,15 @@
 </div></section>
 
     <!-- C. Bagian Transaksi Terbaru (7 Kolom pada 12-col grid) -->
-    <section class="xl:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-card p-6 flex flex-col">
-      <div class="flex items-center justify-between pb-4 border-b border-outline-variant/60"><h3 class="text-headline-sm font-headline-sm text-on-surface tracking-tight">Transaksi Terbaru</h3>
-<a class="text-label-md font-label-md text-primary-container hover:text-secondary font-medium transition-colors hover:underline" href="#">
-  Lihat Semua Transaksi
-</a></div>
+    <section class="xl:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-card p-4 sm:p-6 flex flex-col">
+      <div class="flex items-center justify-between pb-4 border-b border-outline-variant/60">
+        <h3 class="text-headline-sm font-headline-sm text-on-surface tracking-tight">Transaksi Terbaru</h3>
+        <a class="text-label-md font-label-md text-primary-container hover:text-secondary font-medium transition-colors hover:underline" href="#">
+          Lihat Semua Transaksi
+        </a>
+      </div>
       <div class="overflow-x-auto mt-2">
-        <table class="w-full text-left border-collapse">
+        <table class="w-full text-left border-collapse min-w-[420px]">
           <thead>
             <tr class="border-b border-outline-variant/40 text-label-sm font-label-sm text-outline">
               <th class="py-3 px-2 font-medium">Waktu</th>
@@ -384,7 +398,6 @@
     </section>
   </div>
 </main>
-</div>
 <!-- Interactive Detail Transaksi Modal -->
 <div class="fixed inset-0 bg-primary/30 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="txModal">
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-modal w-full max-w-md p-6 overflow-hidden transform transition-all">
@@ -430,7 +443,10 @@
 </div>
 </div>
 </div>
-<script>
+</div><!-- /#page-content -->
+</div>
+<script id="page-script">
+  (function () {
     // Collapsible Accordion Navigation Logic
     const accordionButtons = document.querySelectorAll('.accordion-btn');
 
@@ -508,6 +524,7 @@
         hideTxModal();
       }
     });
+  })();
   </script>
 
 

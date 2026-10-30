@@ -204,16 +204,25 @@ button.bg-primary {
     color: #FF7A00 !important;
   }
 </style><link rel="stylesheet" href="assets/motion.css"/>
-<script src="assets/shell.js"></script>
 <script src="assets/motion.js"></script>
 </head>
 <body class="bg-background text-on-background font-body-md text-[13px] antialiased min-h-screen flex flex-col selection:bg-secondary-container selection:text-primary">
 <!-- APP SHELL CONTAINER -->
 <div class="flex w-full min-h-screen">
+<!-- Mobile Drawer Backdrop -->
+<div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity duration-200 opacity-0" aria-hidden="true"></div>
 <!-- 1. LEFT SIDEBAR NAVIGATION -->
-<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between bg-surface-container-lowest border-r border-outline-variant/60 z-30 shrink-0">
+<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between bg-surface-container-lowest border-r border-outline-variant/60 z-50 shrink-0 transition-transform duration-200 -translate-x-full lg:translate-x-0" id="sidebar-nav">
 <div class="flex flex-col">
-<div class="px-5 pt-5 pb-5 border-b border-outline-variant/40 flex items-center gap-3"><div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-[15px] tracking-tight shadow-sm shrink-0" style="background-color: #FF7A00; color: #FFFFFF;">B</div><span class="text-[15px] font-bold tracking-tight leading-tight whitespace-nowrap text-on-surface">BarberHub POS</span></div>
+<div class="px-5 pt-5 pb-5 border-b border-outline-variant/40 flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-[15px] tracking-tight shadow-sm shrink-0" style="background-color: #FF7A00; color: #FFFFFF;">B</div>
+    <span class="text-[15px] font-bold tracking-tight leading-tight whitespace-nowrap text-on-surface">BarberHub POS</span>
+  </div>
+  <button id="sidebar-close-btn" class="lg:hidden p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors ml-auto flex items-center justify-center cursor-pointer" aria-label="Tutup Menu">
+    <span class="material-symbols-outlined text-[20px]">close</span>
+  </button>
+</div>
 <nav class="px-3 py-4 flex flex-col gap-1">
   <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] text-[14px] font-medium transition-colors duration-150 whitespace-nowrap" href="dashboard.html"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a>
   <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] text-[14px] font-medium transition-colors duration-150 whitespace-nowrap" href="cashier.html"><span class="material-symbols-outlined text-[20px]">shopping_cart</span><span>Transaksi</span></a>
@@ -227,11 +236,24 @@ button.bg-primary {
 </div>
 </aside>
 <!-- 2. MAIN CONTENT AREA -->
-<div class="flex-1 pl-64 flex flex-col min-w-0 w-full">
+<div class="flex-1 pl-0 lg:pl-64 flex flex-col min-w-0 w-full">
 <!-- Top Utility App Bar -->
-<header class="w-full h-16 bg-surface-container-lowest border-b border-outline-variant/60 px-6 flex items-center sticky top-0 z-20"><div class="flex items-center gap-2 text-[14px]"><span class="text-[#737373] font-normal whitespace-nowrap">BarberHub POS</span><span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span><span class="text-[#1A1A1A] font-medium whitespace-nowrap">Riwayat</span></div></header>
+<header class="w-full h-16 bg-surface-container-lowest border-b border-outline-variant/60 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-20">
+  <div class="flex items-center gap-2">
+    <button id="mobile-menu-btn" class="lg:hidden p-2 -ml-2 mr-1 rounded-lg text-[#1A1A1A] hover:bg-surface-container-low transition-colors flex items-center justify-center shrink-0 cursor-pointer" aria-label="Buka Menu">
+      <span class="material-symbols-outlined text-[24px]">menu</span>
+    </button>
+    <div class="flex items-center gap-1.5 sm:gap-2 text-[13px] sm:text-[14px]">
+      <span class="text-[#737373] font-normal whitespace-nowrap">BarberHub POS</span>
+      <span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span>
+      <span id="breadcrumb-page-name" class="text-[#1A1A1A] font-medium whitespace-nowrap">Riwayat</span>
+    </div>
+  </div>
+  <div id="topbar-actions" class="flex items-center gap-3"></div>
+</header>
+<div id="page-content" class="flex-1 flex flex-col w-full min-w-0 transition-opacity duration-150">
 <!-- Main Canvas Container -->
-<main class="flex-1 px-6 py-5 flex flex-col gap-4 w-full">
+<main class="flex-1 px-4 sm:px-6 py-5 flex flex-col gap-4 w-full">
 <!-- Title & Subtitle -->
 <div class="flex flex-col gap-0.5">
 <h1 class="text-[22px] font-semibold text-on-surface tracking-tight leading-tight">Riwayat</h1>
@@ -242,7 +264,7 @@ button.bg-primary {
 <!-- TAB 1: RIWAYAT TRANSAKSI -->
 <section class="flex flex-col gap-3" id="view-transaksi">
 <!-- Filters Row -->
-<div class="bg-surface-container-lowest rounded-xl p-2.5 border border-outline-variant/50 flex flex-wrap items-center gap-2 shadow-sm" style="box-shadow: rgba(27, 77, 62, 0.06) 0px 4px 20px -4px, rgba(0, 0, 0, 0.04) 0px 2px 6px -2px;"><div class="relative min-w-[260px] flex-1"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">search</span><input class="w-full pl-9 pr-3 h-9 rounded-lg bg-surface border border-outline-variant/70 text-[12px] text-on-surface placeholder-on-surface-variant/70 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Cari ID transaksi atau nama capster..." type="text"></div><div class="flex items-center gap-2 flex-wrap"><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="today">Hari Ini</option><option value="yesterday">Kemarin</option><option value="7d">7 Hari Terakhir</option><option value="30d">30 Hari Terakhir</option><option value="this_month">Bulan Ini</option><option value="custom">Kustom</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div><div class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/70 rounded-lg px-3 text-[12px] text-on-surface-variant h-9 shrink-0"><span class="material-symbols-outlined text-[16px] text-outline pointer-events-none">calendar_today</span><input class="clean-date bg-transparent border-0 p-0 text-[12px] text-on-surface focus:outline-none cursor-pointer w-[86px] text-center" type="date" value="2023-10-24"><span class="text-outline text-[11px] whitespace-nowrap">s/d</span><input class="clean-date bg-transparent border-0 p-0 text-[12px] text-on-surface focus:outline-none cursor-pointer w-[86px] text-center" type="date" value="2023-10-24"></div><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="all">Semua Tipe</option><option value="layanan">Layanan</option><option value="produk">Produk</option><option value="campuran">Campuran</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="all">Semua Metode</option><option value="tunai">Tunai</option><option value="qris">QRIS</option><option value="debit">Debit</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="all">Semua Status</option><option value="success">Berhasil</option><option value="cancelled">Dibatalkan</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div></div></div>
+<div class="bg-surface-container-lowest rounded-xl p-2.5 border border-outline-variant/50 flex flex-wrap items-center gap-2 shadow-sm" style="box-shadow: rgba(27, 77, 62, 0.06) 0px 4px 20px -4px, rgba(0, 0, 0, 0.04) 0px 2px 6px -2px;"><div class="relative min-w-0 sm:min-w-[240px] flex-1 w-full sm:w-auto"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">search</span><input class="w-full pl-9 pr-3 h-9 rounded-lg bg-surface border border-outline-variant/70 text-[12px] text-on-surface placeholder-on-surface-variant/70 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Cari ID transaksi atau nama capster..." type="text"></div><div class="flex items-center gap-2 flex-wrap"><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="today">Hari Ini</option><option value="yesterday">Kemarin</option><option value="7d">7 Hari Terakhir</option><option value="30d">30 Hari Terakhir</option><option value="this_month">Bulan Ini</option><option value="custom">Kustom</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div><div class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/70 rounded-lg px-3 text-[12px] text-on-surface-variant h-9 shrink-0"><span class="material-symbols-outlined text-[16px] text-outline pointer-events-none">calendar_today</span><input class="clean-date bg-transparent border-0 p-0 text-[12px] text-on-surface focus:outline-none cursor-pointer w-[86px] text-center" type="date" value="2023-10-24"><span class="text-outline text-[11px] whitespace-nowrap">s/d</span><input class="clean-date bg-transparent border-0 p-0 text-[12px] text-on-surface focus:outline-none cursor-pointer w-[86px] text-center" type="date" value="2023-10-24"></div><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="all">Semua Tipe</option><option value="layanan">Layanan</option><option value="produk">Produk</option><option value="campuran">Campuran</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="all">Semua Metode</option><option value="tunai">Tunai</option><option value="qris">QRIS</option><option value="debit">Debit</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div><div class="relative inline-flex items-center"><select class="clean-select appearance-none bg-surface-container-lowest border border-outline-variant/70 rounded-lg text-body-sm text-on-surface h-9 pl-3 pr-8 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary whitespace-nowrap" style="background-image: none !important; -webkit-appearance: none !important; appearance: none !important;"><option value="all">Semua Status</option><option value="success">Berhasil</option><option value="cancelled">Dibatalkan</option></select><span class="material-symbols-outlined text-[18px] text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">expand_more</span></div></div></div>
 <!-- Table Container -->
 <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 shadow-sm overflow-hidden w-full" style="box-shadow: rgba(27, 77, 62, 0.06) 0px 4px 20px -4px, rgba(0, 0, 0, 0.04) 0px 2px 6px -2px;">
 <div class="overflow-x-auto w-full">
@@ -266,8 +288,6 @@ button.bg-primary {
 </div>
 </section>
 </main>
-</div>
-</div>
 <!-- ======================================================== -->
 <!-- 3. INTERACTIVE TRANSACTION DETAIL MODAL                  -->
 <!-- ======================================================== -->
@@ -356,8 +376,11 @@ button.bg-primary {
 </div>
 </div>
 </div>
+</div><!-- /#page-content -->
+</div>
 <!-- Interactive Behaviors -->
-<script>
+<script id="page-script">
+(function() {
   // Tab Switcher Logic: Transaksi vs Stok
   function switchTab(target) {
     const btnTrx = document.getElementById('tab-btn-transaksi');
@@ -476,6 +499,13 @@ button.bg-primary {
       closeTrxDetail();
     }
   });
+
+  // Export handlers to window for inline onclick attributes
+  window.switchTab = switchTab;
+  window.toggleAccordion = toggleAccordion;
+  window.showTrxDetail = showTrxDetail;
+  window.closeTrxDetail = closeTrxDetail;
+})();
 </script>
 
 

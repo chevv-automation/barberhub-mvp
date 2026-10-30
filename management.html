@@ -92,16 +92,25 @@
     .status-badge.text-secondary { color: #16A34A !important; }
   </style>
 <link rel="stylesheet" href="assets/motion.css"/>
-<script src="assets/shell.js"></script>
 <script src="assets/motion.js"></script>
 </head>
 <body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex">
+<!-- Mobile Drawer Backdrop -->
+<div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity duration-200 opacity-0" aria-hidden="true"></div>
 <!-- SideNavBar Component -->
-<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between bg-surface-container-lowest border-r border-outline-variant z-30 shrink-0 select-none">
+<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between bg-surface-container-lowest border-r border-outline-variant z-50 shrink-0 select-none transition-transform duration-200 -translate-x-full lg:translate-x-0" id="sidebar-nav">
 <!-- Top Branding & Navigation -->
 <div class="flex flex-col">
 <!-- Monogram & Title -->
-<div class="px-5 pt-5 pb-5 border-b border-outline-variant/40 flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold text-lg shadow-sm" style="background-color: #FF7A00;">B</div><span class="text-[15px] font-bold text-gray-900 tracking-tight leading-tight">BarberHub POS</span></div>
+<div class="px-5 pt-5 pb-5 border-b border-outline-variant/40 flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold text-lg shadow-sm" style="background-color: #FF7A00;">B</div>
+    <span class="text-[15px] font-bold text-gray-900 tracking-tight leading-tight">BarberHub POS</span>
+  </div>
+  <button id="sidebar-close-btn" class="lg:hidden p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors ml-auto flex items-center justify-center cursor-pointer" aria-label="Tutup Menu">
+    <span class="material-symbols-outlined text-[20px]">close</span>
+  </button>
+</div>
 <!-- Navigation Tree -->
 <nav class="px-3 py-4 flex flex-col gap-1">
   <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-gray-900 text-sm font-medium transition-colors duration-150" href="dashboard.html"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a>
@@ -117,11 +126,24 @@
 </div>
 </aside>
 <!-- Main Canvas Container -->
-<div class="pl-64 flex-1 flex flex-col min-h-screen bg-background">
+<div class="pl-0 lg:pl-64 flex-1 flex flex-col min-h-screen bg-background w-full min-w-0">
 <!-- Top Navigation Anchor Header -->
-<header class="w-full h-16 px-8 flex items-center z-20 sticky top-0 bg-surface-container-lowest border-b border-outline-variant shadow-sm"><div class="flex items-center gap-2 text-[14px]"><span class="text-[#737373] font-normal">BarberHub POS</span><span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span><span class="text-[#1A1A1A] font-medium">Manajemen</span></div></header>
+<header class="w-full h-16 px-4 sm:px-8 flex items-center justify-between z-20 sticky top-0 bg-surface-container-lowest border-b border-outline-variant shadow-sm">
+  <div class="flex items-center gap-2">
+    <button id="mobile-menu-btn" class="lg:hidden p-2 -ml-2 rounded-lg text-[#1A1A1A] hover:bg-surface-container-low transition-colors flex items-center justify-center shrink-0 cursor-pointer" aria-label="Buka Menu">
+      <span class="material-symbols-outlined text-[24px]">menu</span>
+    </button>
+    <nav class="flex items-center gap-1.5 sm:gap-2 text-[13px] sm:text-[14px]">
+      <span class="text-[#737373] font-normal truncate">BarberHub POS</span>
+      <span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span>
+      <span id="breadcrumb-page-name" class="text-[#1A1A1A] font-medium truncate">Manajemen</span>
+    </nav>
+  </div>
+  <div id="topbar-actions" class="flex items-center gap-3"></div>
+</header>
+<div id="page-content" class="flex-1 flex flex-col w-full min-w-0 transition-opacity duration-150">
 <!-- Page Content Area -->
-<main class="p-8 flex-1 max-w-[1440px] w-full mx-auto flex flex-col gap-6">
+<main class="p-4 sm:p-6 lg:p-8 flex-1 max-w-[1440px] w-full mx-auto flex flex-col gap-6">
 <!-- Header Section -->
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 <div>
@@ -139,23 +161,23 @@
 <!-- Segmented Tab Bar & Filters Row -->
 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
 <!-- Segmented Control for Categories -->
-<div class="inline-flex p-1 bg-gray-100 rounded-xl border border-gray-200 w-fit">
-<button class="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent text-gray-500 hover:text-gray-900" id="tabBtn-layanan" onclick="switchTab('layanan')" style="background-color: transparent; color: rgb(115, 115, 115); animation-delay: 60ms;">
+<div class="inline-flex p-1 bg-gray-100 rounded-xl border border-gray-200 w-fit max-w-full overflow-x-auto">
+<button class="flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent text-gray-500 hover:text-gray-900 whitespace-nowrap shrink-0" id="tabBtn-layanan" onclick="switchTab('layanan')" style="background-color: transparent; color: rgb(115, 115, 115); animation-delay: 60ms;">
 <span class="material-symbols-outlined text-[18px]">content_cut</span>
 <span class="">Layanan</span>
 </button>
-<button class="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 bg-white text-[#FF7A00] shadow-sm" id="tabBtn-produk" onclick="switchTab('produk')" style="background-color: rgb(255, 255, 255); color: rgb(255, 122, 0); animation-delay: 60ms;">
+<button class="flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 bg-white text-[#FF7A00] shadow-sm whitespace-nowrap shrink-0" id="tabBtn-produk" onclick="switchTab('produk')" style="background-color: rgb(255, 255, 255); color: rgb(255, 122, 0); animation-delay: 60ms;">
 <span class="material-symbols-outlined text-[18px]">inventory_2</span>
 <span class="">Produk</span>
 </button>
-<button class="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent text-gray-500 hover:text-gray-900" id="tabBtn-capster" onclick="switchTab('capster')" style="background-color: transparent; color: rgb(115, 115, 115); animation-delay: 60ms;">
+<button class="flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent text-gray-500 hover:text-gray-900 whitespace-nowrap shrink-0" id="tabBtn-capster" onclick="switchTab('capster')" style="background-color: transparent; color: rgb(115, 115, 115); animation-delay: 60ms;">
 <span class="material-symbols-outlined text-[18px]">badge</span>
 <span class="">Capster</span>
 </button>
 </div>
 <!-- Filter & Search Cluster -->
-<div class="flex flex-wrap items-center gap-3">
-<div class="relative min-w-[260px]">
+<div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+<div class="relative min-w-0 sm:min-w-[240px] flex-1">
 <span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-gray-400">search</span>
 <input class="w-full pl-9 pr-3 py-2 bg-surface-container-lowest border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7A00] transition-colors" id="searchInput" placeholder="Cari produk barcode/nama..." type="text">
 </div>
@@ -746,7 +768,6 @@
 </div>
 </section>
 </main>
-</div>
 <!-- ============================================== -->
 <!-- PRODUCT / GENERAL FORM MODAL -->
 <!-- ============================================== -->
@@ -1095,8 +1116,11 @@
 <span class="material-symbols-outlined text-green-400 text-[20px]" id="toastIcon">check_circle</span>
 <span class="text-sm font-medium" id="toastMessage">Berhasil</span>
 </div>
+</div><!-- /#page-content -->
+</div>
 <!-- Unified & Robust JavaScript Engine -->
-<script>
+<script id="page-script">
+(function() {
   let currentTab = 'capster';
   let pendingDeactivateRowId = null;
   let pendingDeactivateName = '';
@@ -1733,9 +1757,31 @@
   });
 
   // Init explicitly on Capster tab
-  window.addEventListener('DOMContentLoaded', () => {
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', () => {
+      switchTab('capster');
+    });
+  } else {
     switchTab('capster');
-  });
+  }
+
+  // Export handlers to window for inline onclick attributes
+  window.switchTab = switchTab;
+  window.openModal = openModal;
+  window.closeModal = closeModal;
+  window.openEditModal = openEditModal;
+  window.openModalStokMasukItem = openModalStokMasukItem;
+  window.openEditCapsterDedicated = openEditCapsterDedicated;
+  window.executeStatusDeactivate = executeStatusDeactivate;
+  window.handleCapsterActionClick = handleCapsterActionClick;
+  window.handlePrimaryActionDedicated = handlePrimaryActionDedicated;
+  window.removeProductImage = removeProductImage;
+  window.resetCapsterFilters = resetCapsterFilters;
+  window.selectCapsterStatusOption = selectCapsterStatusOption;
+  window.toggleServiceStatus = toggleServiceStatus;
+  window.showToast = showToast;
+  window.filterTable = filterTable;
+})();
 </script>
 
 

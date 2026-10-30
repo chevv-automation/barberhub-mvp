@@ -49,9 +49,9 @@
 <!-- Monolith Layout: Offset Asymmetrical Grid with Architectural Left Column -->
 <main class="w-full min-h-screen flex flex-col lg:flex-row relative overflow-hidden">
 <!-- LEFT SIDE: Stark Architectural Column & Stacked High-Contrast Wordmark Monolith -->
-<div class="relative w-full lg:w-[54%] xl:w-[52%] flex flex-col justify-between p-8 sm:p-14 lg:p-20 xl:p-24 border-b lg:border-b-0 lg:border-r border-[#E5E7EB] bg-[#FAFAFA]">
+<div class="relative w-full lg:w-[54%] xl:w-[52%] flex flex-col justify-between p-6 sm:p-10 lg:p-20 xl:p-24 border-b lg:border-b-0 lg:border-r border-[#E5E7EB] bg-[#FAFAFA]">
 <!-- Architectural Shear Intersection & Precision Guidelines -->
-<div aria-hidden="true" class="bh-geo absolute inset-0 pointer-events-none select-none overflow-hidden">
+<div aria-hidden="true" class="bh-geo absolute inset-0 pointer-events-none select-none overflow-hidden hidden sm:block">
 <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg"><line stroke="#E5E7EB" stroke-width="1" x1="15%" x2="15%" y1="0" y2="100%"></line><line class="bh-geo-line" stroke="#E5E7EB" stroke-width="1" x1="5%" x2="90%" y1="80%" y2="5%"></line><line stroke="#D1D5DB" stroke-dasharray="4 6" stroke-width="1" x1="15%" x2="85%" y1="52%" y2="52%"></line><circle cx="15%" cy="52%" fill="#FF7A00" r="3"></circle><line stroke="#FF7A00" stroke-width="1.5" x1="15%" x2="15%" y1="52%" y2="57%"></line></svg>
 </div>
 <!-- Header Grid Metric Mark (Minimal structural line) -->
@@ -60,26 +60,26 @@
 <div class="w-16 h-[1px] bg-[#E5E7EB]"></div>
 </div>
 <!-- Core Monolith Wordmark: Giant Stacked Typography -->
-<div class="relative z-10 my-auto py-12 lg:py-0">
-<div class="flex flex-col font-headline font-extrabold tracking-[-0.04em] leading-[0.88] select-none text-6xl sm:text-7xl md:text-8xl lg:text-[104px] xl:text-[124px]">
+<div class="relative z-10 my-auto py-4 sm:py-8 lg:py-0">
+<div class="flex flex-col font-headline font-extrabold tracking-[-0.04em] leading-[0.88] select-none text-5xl sm:text-7xl md:text-8xl lg:text-[104px] xl:text-[124px]">
 <span class="bh-word-a text-[#111827] tracking-tight">BARBER</span>
 <span class="bh-word-b text-primaryOrange mt-1 sm:mt-2">HUB</span>
 </div>
 <!-- Architectural Anchor Bar -->
-<div class="mt-8 flex items-center gap-4"><div class="bh-anchor w-16 h-[3px] bg-primaryOrange"></div><div class="w-2 h-2 border border-[#9CA3AF] rotate-45"></div><div class="w-32 h-[1px] bg-[#E5E7EB]"></div></div>
+<div class="mt-4 sm:mt-8 flex items-center gap-3 sm:gap-4"><div class="bh-anchor w-12 sm:w-16 h-[3px] bg-primaryOrange"></div><div class="w-2 h-2 border border-[#9CA3AF] rotate-45"></div><div class="w-20 sm:w-32 h-[1px] bg-[#E5E7EB]"></div></div>
 </div>
 <!-- Footer Micro Axis Mark -->
 <div class="relative z-10 hidden sm:flex items-center gap-2"><div class="w-20 h-[1px] bg-[#E5E7EB]"></div><div class="w-1 h-1 bg-[#D1D5DB]"></div></div>
 </div>
 <!-- RIGHT SIDE: Recessed High-Contrast Matte Surface & Login Form -->
-<div class="w-full lg:w-[46%] xl:w-[48%] flex items-center justify-center p-6 sm:p-12 lg:p-16 xl:p-24 relative z-10 bg-[#F8F9FA]">
-<div class="bh-card w-full max-w-[400px] bg-white border border-[#E5E7EB] rounded-none p-8 sm:p-12 shadow-sm relative">
+<div class="w-full lg:w-[46%] xl:w-[48%] flex items-center justify-center p-4 sm:p-8 lg:p-16 xl:p-24 relative z-10 bg-[#F8F9FA]">
+<div class="bh-card w-full max-w-[400px] bg-white border border-[#E5E7EB] rounded-none p-6 sm:p-10 shadow-sm relative">
 <!-- Recessed Accent Corner Notch -->
 <div class="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-primaryOrange"></div>
 <!-- Header -->
-<div class="mb-9"><h1 class="font-headline font-bold text-2xl sm:text-3xl text-[#111827] tracking-tight mb-2">Selamat Datang</h1><p class="text-[#6B7280] text-sm font-normal">Masuk ke akun Anda.</p></div>
+<div class="mb-6 sm:mb-8"><h1 class="font-headline font-bold text-2xl sm:text-3xl text-[#111827] tracking-tight mb-2">Selamat Datang</h1><p class="text-[#6B7280] text-sm font-normal">Masuk ke akun Anda.</p></div>
 <!-- Form -->
-<form class="space-y-6" id="loginForm" novalidate="" onsubmit="handleSubmit(event)">
+<form class="space-y-5 sm:space-y-6" id="loginForm" novalidate="" onsubmit="handleSubmit(event)">
 <!-- Username Input -->
 <div>
 <label class="block font-headline text-xs font-bold uppercase tracking-wider text-[#374151] mb-2.5" for="username">

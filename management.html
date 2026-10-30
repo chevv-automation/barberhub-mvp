@@ -1,0 +1,1744 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BarberHub POS - Halaman Manajemen Terpadu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed-variant": "#753400",
+            "on-background": "#1c1b1b",
+            "secondary-fixed": "#efe0d1",
+            "secondary": "#675d51",
+            "surface-bright": "#fcf9f8",
+            "secondary-fixed-dim": "#d2c4b5",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#f3f0ef",
+            "surface-tint": "#994700",
+            "secondary-container": "#ecddce",
+            "outline-variant": "#e5e7eb",
+            "surface-dim": "#dcd9d9",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "primary": "#FF7A00",
+            "primary-container": "#FF7A00",
+            "on-primary-container": "#5c2800",
+            "inverse-surface": "#1c1b1b",
+            "on-secondary-container": "#6b6155",
+            "on-error": "#ffffff",
+            "surface": "#fcf9f8",
+            "on-surface-variant": "#737373",
+            "surface-container-low": "#f9fafb",
+            "surface-container-high": "#eae7e7",
+            "surface-container": "#f3f4f6",
+            "surface-container-highest": "#e5e2e1",
+            "background": "#f9fafb",
+            "outline": "#9ca3af",
+            "on-surface": "#1c1b1b",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "headline-sm": ["Inter", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "numeric-currency": ["Inter", "sans-serif"],
+            "headline-lg": ["Inter", "sans-serif"],
+            "label-lg": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "display-lg": ["Inter", "sans-serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "title-md": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #e5e7eb;
+      border-radius: 4px;
+    }
+    body { background-color: #f9fafb !important; color: #1c1b1b !important; }
+    .status-badge .bg-secondary { background-color: #16A34A !important; }
+    .status-badge.text-secondary { color: #16A34A !important; }
+  </style>
+<link rel="stylesheet" href="assets/motion.css"/>
+<script src="assets/shell.js"></script>
+<script src="assets/motion.js"></script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex">
+<!-- SideNavBar Component -->
+<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between bg-surface-container-lowest border-r border-outline-variant z-30 shrink-0 select-none">
+<!-- Top Branding & Navigation -->
+<div class="flex flex-col">
+<!-- Monogram & Title -->
+<div class="px-5 pt-5 pb-5 border-b border-outline-variant/40 flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold text-lg shadow-sm" style="background-color: #FF7A00;">B</div><span class="text-[15px] font-bold text-gray-900 tracking-tight leading-tight">BarberHub POS</span></div>
+<!-- Navigation Tree -->
+<nav class="px-3 py-4 flex flex-col gap-1">
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-gray-900 text-sm font-medium transition-colors duration-150" href="dashboard.html"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-gray-900 text-sm font-medium transition-colors duration-150" href="cashier.html"><span class="material-symbols-outlined text-[20px]">shopping_cart</span><span>Transaksi</span></a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150" href="management.html" style="background-color: #FFF0E0; color: #FF7A00;"><span class="material-symbols-outlined text-[20px]" style="color: #FF7A00;">inventory_2</span><span>Manajemen</span></a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-gray-900 text-sm font-medium transition-colors duration-150" href="history.html"><span class="material-symbols-outlined text-[20px]">history</span><span>Riwayat</span></a>
+</nav>
+</div>
+<!-- Bottom Sidebar Section -->
+<div class="px-3 pb-4 pt-2 flex flex-col gap-1 border-t border-outline-variant bg-surface-container-lowest">
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-gray-900 text-sm font-medium transition-colors" href="settings.html"><span class="material-symbols-outlined text-[20px]">settings</span><span>Pengaturan</span></a>
+  <a href="login.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-red-50 hover:text-red-600 text-sm font-medium transition-colors"><span class="material-symbols-outlined text-[20px]">logout</span><span>Keluar</span></a>
+</div>
+</aside>
+<!-- Main Canvas Container -->
+<div class="pl-64 flex-1 flex flex-col min-h-screen bg-background">
+<!-- Top Navigation Anchor Header -->
+<header class="w-full h-16 px-8 flex items-center z-20 sticky top-0 bg-surface-container-lowest border-b border-outline-variant shadow-sm"><div class="flex items-center gap-2 text-[14px]"><span class="text-[#737373] font-normal">BarberHub POS</span><span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span><span class="text-[#1A1A1A] font-medium">Manajemen</span></div></header>
+<!-- Page Content Area -->
+<main class="p-8 flex-1 max-w-[1440px] w-full mx-auto flex flex-col gap-6">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 tracking-tight">Manajemen</h1>
+<p class="text-sm text-gray-500 mt-1">Kelola layanan, produk, dan capster BarberHub.</p>
+</div>
+<div class="flex items-center gap-3">
+<!-- Dynamic Primary Action Button based on active tab -->
+<button class="flex items-center gap-2 px-4 py-2.5 bg-[#FF7A00] hover:bg-[#e06b00] text-white font-medium text-sm rounded-xl transition-all duration-150 active:scale-[0.98] shadow-sm" id="primaryActionBtn" onclick="handlePrimaryActionDedicated()">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="" id="primaryActionLabel">Tambah Produk</span>
+</button>
+</div>
+</div>
+<!-- Segmented Tab Bar & Filters Row -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<!-- Segmented Control for Categories -->
+<div class="inline-flex p-1 bg-gray-100 rounded-xl border border-gray-200 w-fit">
+<button class="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent text-gray-500 hover:text-gray-900" id="tabBtn-layanan" onclick="switchTab('layanan')" style="background-color: transparent; color: rgb(115, 115, 115); animation-delay: 60ms;">
+<span class="material-symbols-outlined text-[18px]">content_cut</span>
+<span class="">Layanan</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 bg-white text-[#FF7A00] shadow-sm" id="tabBtn-produk" onclick="switchTab('produk')" style="background-color: rgb(255, 255, 255); color: rgb(255, 122, 0); animation-delay: 60ms;">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+<span class="">Produk</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent text-gray-500 hover:text-gray-900" id="tabBtn-capster" onclick="switchTab('capster')" style="background-color: transparent; color: rgb(115, 115, 115); animation-delay: 60ms;">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span class="">Capster</span>
+</button>
+</div>
+<!-- Filter & Search Cluster -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative min-w-[260px]">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-gray-400">search</span>
+<input class="w-full pl-9 pr-3 py-2 bg-surface-container-lowest border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#FF7A00] transition-colors" id="searchInput" placeholder="Cari produk barcode/nama..." type="text">
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border border-gray-200 rounded-xl pl-3 pr-8 py-2 text-xs font-medium text-gray-800 focus:outline-none focus:border-[#FF7A00] cursor-pointer transition-colors" id="statusFilter" onchange="filterCapsterStatus(this.value)">
+<option value="all">Semua Status</option>
+<option value="active">Aktif</option>
+<option value="inactive">Nonaktif</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-2.5 text-[18px] text-gray-400">expand_more</span>
+</div>
+<button class="p-2 bg-surface-container-lowest border border-gray-200 rounded-xl text-gray-500 hover:text-gray-800 hover:bg-gray-100 transition-colors" onclick="resetCapsterFilters()" title="Muat ulang data">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- TAB CONTENT: LAYANAN -->
+<!-- ============================================== -->
+<section class="flex-col gap-4 hidden" id="content-layanan">
+<!-- Summary Micro-Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-gray-200 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs font-medium text-gray-500">Total Layanan</span>
+<span class="text-2xl font-bold text-[#FF7A00] mt-1">5</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-[#FFF0E0] flex items-center justify-center text-[#FF7A00]">
+<span class="material-symbols-outlined text-[22px]">content_cut</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-gray-200 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs font-medium text-gray-500">Layanan Aktif</span>
+<span class="text-2xl font-bold text-[#FF7A00] mt-1">5</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-[#FFF0E0] flex items-center justify-center text-[#FF7A00]">
+<span class="material-symbols-outlined text-[22px]">check_circle</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-gray-200 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs font-medium text-gray-500">Rata-rata Tarif</span>
+<span class="text-2xl font-bold text-gray-900 mt-1">Rp36.000</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-[#FFF0E0] flex items-center justify-center text-[#FF7A00]">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+</div>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600">
+<th class="py-3.5 px-6">Nama Layanan</th>
+<th class="py-3.5 px-6">Harga</th>
+<th class="py-3.5 px-6">Status</th>
+<th class="py-3.5 px-6 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 text-sm"><!-- Row 1 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+
+<span class="font-medium text-gray-900">Potong Rambut</span>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp35.000
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditModal('layanan', 'Potong Rambut', '35000')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-medium text-gray-500 transition-colors hover:border-red-500 hover:text-red-600" onclick="toggleServiceStatus(this)">Nonaktifkan</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+
+<span class="font-medium text-gray-900">Haircut + Wash</span>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp50.000
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditModal('layanan', 'Haircut + Wash', '50000')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors" onclick="toggleServiceStatus(this)">
+                      Nonaktifkan
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+
+<span class="font-medium text-gray-900">Hair Wash</span>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp15.000
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditModal('layanan', 'Hair Wash', '15000')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors" onclick="toggleServiceStatus(this)">
+                      Nonaktifkan
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+
+<span class="font-medium text-gray-900">Hair Styling</span>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp25.000
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditModal('layanan', 'Hair Styling', '25000')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors" onclick="toggleServiceStatus(this)">
+                      Nonaktifkan
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+
+<span class="font-medium text-gray-900">Haircut + Styling</span>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp55.000
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditModal('layanan', 'Haircut + Styling', '55000')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors" onclick="toggleServiceStatus(this)">
+                      Nonaktifkan
+                    </button>
+</div>
+</td>
+</tr></tbody>
+</table>
+</div>
+<div class="px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between text-xs text-gray-500 font-medium">
+<span class="">Menampilkan 5 dari 5 layanan</span>
+</div>
+</div>
+</section>
+<!-- ============================================== -->
+<!-- TAB CONTENT: PRODUK -->
+<!-- ============================================== -->
+<section class="flex-col gap-4 flex" id="content-produk">
+<!-- Stock Quick Operations Strip -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-gray-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-[#FFF0E0] flex items-center justify-center text-[#FF7A00]">
+<span class="material-symbols-outlined text-[20px]">package_2</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-gray-900">Inventaris Produk Retail</div>
+<div class="text-xs text-gray-500">Catat stok masuk, sesuaikan jumlah, dan penggunaan harian.</div>
+</div>
+</div>
+<div class="flex items-center gap-2 w-full md:w-auto">
+<button class="flex-1 md:flex-initial flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 text-xs font-medium text-[#FF7A00] transition-colors" onclick="openModal('modalStokMasuk')">
+<span class="material-symbols-outlined text-[16px]">arrow_downward</span>
+<span class="">Stok Masuk</span>
+</button>
+<button class="flex-1 md:flex-initial flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 text-xs font-medium text-gray-700 transition-colors" onclick="openModal('modalPenyesuaian')">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span class="">Penyesuaian</span>
+</button>
+<button class="flex-1 md:flex-initial flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 text-xs font-medium text-gray-700 transition-colors" onclick="openModal('modalPemakaian')">
+<span class="material-symbols-outlined text-[16px]">content_cut</span>
+<span class="">Catat Pemakaian</span>
+</button>
+</div>
+</div>
+<!-- Product Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600">
+<th class="py-3.5 px-6">Produk</th>
+<th class="py-3.5 px-6">Harga Jual</th>
+<th class="py-3.5 px-6">Stok</th>
+<th class="py-3.5 px-6">Stok Minimum</th>
+<th class="py-3.5 px-6">Status</th>
+<th class="py-3.5 px-6 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 text-sm"><!-- Row 1: Pomade Classic -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 border border-gray-200 shrink-0 shadow-sm flex items-center justify-center text-gray-400"><span class="material-symbols-outlined text-[20px]">inventory_2</span></div>
+<div>
+<div class="font-medium text-gray-900">Pomade Classic</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp65.000
+                </td>
+<td class="py-4 px-6">
+<span class="font-semibold text-gray-900">24</span>
+<span class="text-xs text-gray-500 ml-1">pcs</span>
+</td>
+<td class="py-4 px-6 text-gray-500">
+                  5 pcs
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openModalStokMasukItem('Pomade Classic')" title="Catat Stok Masuk">
+                      + Stok
+                    </button>
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 transition-colors" onclick="openEditModal('produk', 'Pomade Classic', '65000', 'PMC-001', '24', '5', true)">
+                      Edit
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Hair Tonic -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 border border-gray-200 shrink-0 shadow-sm flex items-center justify-center text-gray-400"><span class="material-symbols-outlined text-[20px]">inventory_2</span></div>
+<div>
+<div class="font-medium text-gray-900">Hair Tonic</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp45.000
+                </td>
+<td class="py-4 px-6">
+<span class="font-semibold text-gray-900">15</span>
+<span class="text-xs text-gray-500 ml-1">pcs</span>
+</td>
+<td class="py-4 px-6 text-gray-500">
+                  4 pcs
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openModalStokMasukItem('Hair Tonic')">
+                      + Stok
+                    </button>
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 transition-colors" onclick="openEditModal('produk', 'Hair Tonic', '45000', 'HTN-002', '15', '4', true)">
+                      Edit
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Clay Matte -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 border border-gray-200 shrink-0 shadow-sm flex items-center justify-center text-gray-400"><span class="material-symbols-outlined text-[20px]">inventory_2</span></div>
+<div>
+<div class="font-medium text-gray-900">Clay Matte</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp55.000
+                </td>
+<td class="py-4 px-6">
+<span class="font-semibold text-gray-900">18</span>
+<span class="text-xs text-gray-500 ml-1">pcs</span>
+</td>
+<td class="py-4 px-6 text-gray-500">
+                  5 pcs
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openModalStokMasukItem('Clay Matte')">
+                      + Stok
+                    </button>
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 transition-colors" onclick="openEditModal('produk', 'Clay Matte', '55000', 'CLM-003', '18', '5', true)">
+                      Edit
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Shampoo Premium -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 border border-gray-200 shrink-0 shadow-sm flex items-center justify-center text-gray-400"><span class="material-symbols-outlined text-[20px]">inventory_2</span></div>
+<div>
+<div class="font-medium text-gray-900">Shampoo Premium</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp75.000
+                </td>
+<td class="py-4 px-6">
+<span class="font-semibold text-gray-900">12</span>
+<span class="text-xs text-gray-500 ml-1">pcs</span>
+</td>
+<td class="py-4 px-6 text-gray-500">
+                  3 pcs
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openModalStokMasukItem('Shampoo Premium')">
+                      + Stok
+                    </button>
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 transition-colors" onclick="openEditModal('produk', 'Shampoo Premium', '75000', 'SHP-004', '12', '3', false)">
+                      Edit
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Hair Powder -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 border border-gray-200 shrink-0 shadow-sm flex items-center justify-center text-gray-400"><span class="material-symbols-outlined text-[20px]">inventory_2</span></div>
+<div>
+<div class="font-medium text-gray-900">Hair Powder</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-900">
+                  Rp40.000
+                </td>
+<td class="py-4 px-6">
+<span class="font-semibold text-gray-900">8</span>
+<span class="text-xs text-gray-500 ml-1">pcs</span>
+</td>
+<td class="py-4 px-6 text-gray-500">
+                  5 pcs
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openModalStokMasukItem('Hair Powder')">
+                      + Stok
+                    </button>
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 transition-colors" onclick="openEditModal('produk', 'Hair Powder', '40000', 'HPW-005', '8', '5', false)">
+                      Edit
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Hair Serum (Out of Stock / Inactive) -->
+<tr class="hover:bg-gray-50/70 transition-colors bg-gray-50/50">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 border border-gray-200 shrink-0 shadow-sm flex items-center justify-center opacity-60 text-gray-400"><span class="material-symbols-outlined text-[20px]">inventory_2</span></div>
+<div>
+<div class="font-medium text-gray-500">Hair Serum</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 font-semibold text-gray-500">
+                  Rp60.000
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 text-xs font-medium text-red-600 px-2 py-0.5 rounded bg-red-50 border border-red-200">
+                    Stok habis (0)
+                  </span>
+</td>
+<td class="py-4 px-6 text-gray-500">
+                  4 pcs
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-medium text-gray-400">Nonaktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg bg-[#FF7A00] text-white hover:bg-[#e06b00] text-xs font-medium transition-colors" onclick="openModalStokMasukItem('Hair Serum')" title="Restok Segera">
+                      Restok
+                    </button>
+<button class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 transition-colors" onclick="openEditModal('produk', 'Hair Serum', '60000', 'HSR-006', '0', '4', false)">
+                      Edit
+                    </button>
+</div>
+</td>
+</tr></tbody>
+</table>
+</div>
+<div class="px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between text-xs text-gray-500 font-medium">
+<span class="">Menampilkan 6 produk retail</span>
+</div>
+</div>
+</section>
+<!-- ============================================== -->
+<!-- TAB CONTENT: CAPSTER (Active by default) -->
+<!-- ============================================== -->
+<section class="flex-col gap-4 hidden" id="content-capster">
+<!-- Capster Table Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600">
+<th class="py-3.5 px-6">Nama Capster</th>
+<th class="py-3.5 px-6">Nomor Telepon</th>
+<th class="py-3.5 px-6">Status</th>
+<th class="py-3.5 px-6 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 text-sm" id="capsterTableBody">
+<!-- Capster 1 -->
+<tr class="hover:bg-gray-50/70 transition-colors" data-status="Aktif" id="capster-row-1">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-[#FFF0E0] text-[#FF7A00] flex items-center justify-center font-semibold text-xs capster-avatar">
+                      RP
+                    </div>
+<div>
+<div class="font-medium text-gray-900 capster-name">Rizky Pratama</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-gray-700 capster-phone">
+                  +62 812-4455-8901
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditCapsterDedicated('Rizky Pratama', '+62 812-4455-8901', 'Aktif')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors btn-toggle-status" onclick="handleCapsterActionClick('capster-row-1')">
+                      Nonaktifkan
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Capster 2 -->
+<tr class="hover:bg-gray-50/70 transition-colors" data-status="Aktif" id="capster-row-2">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-[#FFF0E0] text-[#FF7A00] flex items-center justify-center font-semibold text-xs capster-avatar">
+                      DA
+                    </div>
+<div>
+<div class="font-medium text-gray-900 capster-name">Dimas Arya</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-gray-700 capster-phone">
+                  +62 857-3321-9012
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditCapsterDedicated('Dimas Arya', '+62 857-3321-9012', 'Aktif')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors btn-toggle-status" onclick="handleCapsterActionClick('capster-row-2')">
+                      Nonaktifkan
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Capster 3 -->
+<tr class="hover:bg-gray-50/70 transition-colors" data-status="Aktif" id="capster-row-3">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-[#FFF0E0] text-[#FF7A00] flex items-center justify-center font-semibold text-xs capster-avatar">
+                      FN
+                    </div>
+<div>
+<div class="font-medium text-gray-900 capster-name">Fajar Nugraha</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-gray-700 capster-phone">
+                  +62 878-1122-4433
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-semibold text-[#FF7A00] status-badge">Aktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditCapsterDedicated('Fajar Nugraha', '+62 878-1122-4433', 'Aktif')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors btn-toggle-status" onclick="handleCapsterActionClick('capster-row-3')">
+                      Nonaktifkan
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Capster 4 (Nonaktif) -->
+<tr class="hover:bg-gray-50/70 transition-colors bg-gray-50/40" data-status="Nonaktif" id="capster-row-4">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold text-xs capster-avatar">
+                      GR
+                    </div>
+<div>
+<div class="font-medium text-gray-500 capster-name">Gilang Ramadhan</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-gray-500 capster-phone">
+                  +62 813-9900-1122
+                </td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center text-xs font-medium text-gray-400 status-badge">Nonaktif</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditCapsterDedicated('Gilang Ramadhan', '+62 813-9900-1122', 'Nonaktif')">
+                      Edit
+                    </button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-green-600 text-xs font-medium text-green-700 transition-colors btn-toggle-status" onclick="handleCapsterActionClick('capster-row-4')">
+                      Aktifkan
+                    </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between text-xs text-gray-500 font-medium">
+<span class="" id="capsterCountLabel">Menampilkan 4 capster terdaftar</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- ============================================== -->
+<!-- PRODUCT / GENERAL FORM MODAL -->
+<!-- ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden" id="modalFormItem">
+<div class="bg-surface-container-lowest border border-gray-200 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden transition-all my-auto max-h-[90vh] flex flex-col">
+<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50 shrink-0">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#FFF0E0] border border-orange-200 flex items-center justify-center text-[#FF7A00]" id="modalHeaderIconContainer">
+<span class="material-symbols-outlined text-[20px]" id="modalHeaderIcon">inventory_2</span>
+</div>
+<div>
+<h3 class="text-base font-semibold text-gray-900" id="modalTitle">Tambah Produk Retail</h3>
+<p class="text-xs text-gray-500" id="modalSub">Lengkapi foto produk, informasi harga, dan kuantitas inventaris.</p>
+</div>
+</div>
+<button class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalFormItem')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-4 overflow-y-auto custom-scroll" id="itemForm" onsubmit="handleItemSubmit(event)">
+<!-- PRODUCT IMAGE UPLOAD SECTION -->
+<div class="flex flex-col gap-2" id="productImageContainer">
+<div class="flex items-center justify-between">
+<label class="block text-xs font-semibold text-gray-800">Foto Produk (Opsional)</label>
+<span class="text-xs px-2 py-0.5 rounded-full border border-orange-200 bg-[#FFF0E0] text-[#FF7A00] font-medium" id="imageStatusIndicator">Belum Ada Foto</span>
+</div>
+<input accept="image/png, image/jpeg, image/webp" class="hidden" id="productFileInput" onchange="handleImageFileSelect(event)" type="file">
+<div class="items-start gap-4 p-3.5 rounded-xl border border-gray-200 bg-gray-50 transition-all hidden" id="imagePreviewStateContainer">
+<div class="w-24 h-24 rounded-lg bg-white border border-gray-200 overflow-hidden shrink-0 shadow-sm relative group flex items-center justify-center" id="imagePreviewBox">
+<img alt="Preview Produk" class="w-full h-full object-cover" id="productImageElement" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgcng9IjgiIGZpbGw9IiNlOGVhZWQiLz48cGF0aCBkPSJNMTcwIDEzMCBsMzAgNDAgbDIwLTE1IGw0MCA1NSBIMTQweiIgZmlsbD0iI2JkYzFjNiIvPjxjaXJjbGUgY3g9IjI1MCIgY3k9IjEyMCIgcj0iMTgiIGZpbGw9IiNiZGMxYzYiLz48L3N2Zz4=">
+</div>
+<div class="flex-1 flex flex-col justify-between h-24 py-0.5">
+<div>
+<span class="text-xs font-semibold text-gray-900 block" id="currentImageFilename">foto-produk.png</span>
+<span class="text-xs text-gray-500 block mt-0.5" id="currentImageSize">120 KB</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors flex items-center gap-1 shadow-sm" onclick="document.getElementById('productFileInput').click()" type="button">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+<span class="">Ganti</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors flex items-center gap-1 shadow-sm" onclick="removeProductImage()" type="button">
+<span class="material-symbols-outlined text-[14px]">delete</span>
+<span class="">Hapus</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3.5 rounded-xl border border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition-all cursor-pointer group" id="imageEmptyDropzone" onclick="document.getElementById('productFileInput').click()">
+<div class="w-20 h-20 rounded-lg bg-white border border-gray-200 flex flex-col items-center justify-center text-gray-400 group-hover:text-[#FF7A00] group-hover:border-[#FF7A00] transition-colors shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">add_photo_alternate</span>
+<span class="text-[10px] font-medium mt-1">Upload Foto</span>
+</div>
+<div class="flex-1">
+<span class="text-xs font-semibold text-gray-900 group-hover:text-[#FF7A00] transition-colors block">Pilih Foto Produk</span>
+<span class="text-xs text-gray-500 block mt-0.5">Format JPG, PNG, atau WebP (Maks. 2MB)</span>
+</div>
+</div>
+</div>
+<!-- Nama Produk -->
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1" id="labelItemName">Nama Produk</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="inputItemName" placeholder="Contoh: Pomade Classic" required="" type="text">
+</div>
+<!-- SKU Field -->
+<div id="productSkuContainer">
+<label class="block text-xs font-semibold text-gray-800 mb-1">Kode SKU / Barcode (Opsional)</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="inputItemSku" placeholder="Contoh: PMC-001" type="text">
+</div>
+<!-- Harga Jual -->
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Harga Jual (Rp)</label>
+<div class="relative">
+<span class="absolute left-3 top-2 text-sm text-gray-400 font-medium">Rp</span>
+<input class="w-full pl-10 pr-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="inputItemPrice" placeholder="65000" required="" type="number">
+</div>
+</div>
+<!-- Product Stock Fields -->
+<div class="grid grid-cols-2 gap-3" id="productOnlyFields">
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1" id="labelItemStock">Stok Awal</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="inputItemStock" placeholder="24" type="number">
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Stok Minimum</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="inputItemMinStock" placeholder="5" type="number" value="5">
+</div>
+</div>
+<!-- Status Toggle -->
+<div class="pt-2 border-t border-gray-100 flex items-center justify-between">
+<div>
+<span class="text-xs font-semibold text-gray-800">Status Aktif</span>
+<p class="text-xs text-gray-500">Item dapat dipilih di register kasir dan laporan transaksi.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="toggleItemStatus" type="checkbox">
+<div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
+</label>
+</div>
+<!-- Modal Actions -->
+<div class="pt-3 flex items-center justify-end gap-3 border-t border-gray-200 mt-1">
+<button class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalFormItem')" type="button">
+          Batal
+        </button>
+<button class="px-5 py-2 rounded-xl bg-[#FF7A00] hover:bg-[#e06b00] text-white text-xs font-semibold transition-colors shadow-sm active:scale-[0.98]" id="btnModalSubmit" type="submit">Simpan Produk</button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- DEDICATED CAPSTER MODAL (Tambah & Edit) -->
+<!-- ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden" id="modalCapsterForm">
+<div class="bg-surface-container-lowest border border-gray-200 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden transition-all my-auto flex flex-col">
+<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50 shrink-0">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#FFF0E0] border border-orange-200 flex items-center justify-center text-[#FF7A00]">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<div>
+<h3 class="text-base font-semibold text-gray-900" id="capsterModalTitle">Tambah Capster</h3>
+<p class="text-xs text-gray-500" id="capsterModalSub">Kelola informasi akun dan penugasan capster.</p>
+</div>
+</div>
+<button class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalCapsterForm')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-4" id="formCapsterDedicated" onsubmit="handleCapsterFormSubmit(event)">
+<input id="editCapsterRowId" type="hidden" value="">
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Nama Capster <span class="text-red-500">*</span></label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="inputCapsterName" placeholder="Contoh: Rizky Pratama" required="" type="text">
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Nomor Telepon <span class="text-gray-400 font-normal">(Opsional)</span></label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="inputCapsterPhone" placeholder="Contoh: +62 812-3456-7890" type="tel">
+</div>
+<div class="pt-1">
+<label class="block text-xs font-semibold text-gray-800 mb-2">Status</label>
+<div class="grid grid-cols-2 gap-3" id="capsterStatusGroup">
+<label class="flex items-center gap-2.5 p-3 rounded-xl border border-[#FF7A00] bg-[#FFF0E0] cursor-pointer transition-all select-none shadow-sm" id="labelStatusAktif" onclick="selectCapsterStatusOption('Aktif')">
+<input checked="" class="w-4 h-4 accent-[#FF7A00] text-[#FF7A00] cursor-pointer focus:ring-[#FF7A00]" id="statusCapsterAktif" name="capster_status" onchange="selectCapsterStatusOption('Aktif')" type="radio" value="Aktif">
+<span class="text-xs font-medium text-orange-600" id="textStatusAktif">
+      Aktif
+    </span>
+</label>
+<label class="flex items-center gap-2.5 p-3 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-[#FF7A00] transition-all select-none" id="labelStatusNonaktif" onclick="selectCapsterStatusOption('Nonaktif')">
+<input class="w-4 h-4 accent-[#FF7A00] text-[#FF7A00] cursor-pointer focus:ring-[#FF7A00]" id="statusCapsterNonaktif" name="capster_status" onchange="selectCapsterStatusOption('Nonaktif')" type="radio" value="Nonaktif">
+<span class="text-xs font-medium text-gray-600" id="textStatusNonaktif">
+      Nonaktif
+    </span>
+</label>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-end gap-3 border-t border-gray-200 mt-2">
+<button class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalCapsterForm')" type="button">
+          Batal
+        </button>
+<button class="px-5 py-2 rounded-xl bg-[#FF7A00] hover:bg-[#e06b00] text-white text-xs font-semibold transition-colors shadow-sm active:scale-[0.98]" id="btnCapsterSubmit" type="submit">Simpan Capster</button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- CONFIRMATION MODAL: DEAKTIVASI CAPSTER -->
+<!-- ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden" id="modalConfirmStatus">
+<div class="bg-surface-container-lowest border border-gray-200 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+<div class="p-6 flex flex-col gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-full bg-red-50 border border-red-200 flex items-center justify-center text-red-600 shrink-0" id="confirmIconContainer">
+<span class="material-symbols-outlined text-[22px]" id="confirmIcon">person_off</span>
+</div>
+<div>
+<h3 class="text-base font-semibold text-gray-900" id="confirmTitle">Konfirmasi Nonaktifkan Capster</h3>
+<p class="text-xs text-gray-600 mt-1.5 leading-relaxed" id="confirmDesc">
+            Menonaktifkan capster <span class="font-semibold text-gray-900" id="confirmCapsterName">Rizky Pratama</span> akan mencegah capster ini dipilih dalam transaksi baru di register kasir, namun seluruh riwayat data dan transaksi sebelumnya tetap tersimpan rapi.
+          </p>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-end gap-3 border-t border-gray-200 mt-1">
+<button class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalConfirmStatus')" type="button">
+          Batal
+        </button>
+<button class="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition-colors shadow-sm active:scale-[0.98]" id="btnConfirmAction" onclick="executeStatusDeactivate()" type="button">
+          Ya, Nonaktifkan
+        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- MODAL: STOK MASUK -->
+<!-- ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 hidden" id="modalStokMasuk">
+<div class="bg-surface-container-lowest border border-gray-200 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-[#FF7A00]">arrow_downward</span>
+<h3 class="text-base font-semibold text-gray-900">Penerimaan Stok Masuk</h3>
+</div>
+<button class="p-1 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalStokMasuk')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-4" onsubmit="handleInventoryAction(event, 'modalStokMasuk', 'Stok berhasil ditambahkan.')">
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Pilih Produk</label>
+<select class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" id="selectStokMasukProduct">
+<option>Pomade Classic</option>
+<option>Hair Tonic</option>
+<option>Clay Matte</option>
+<option>Shampoo Premium</option>
+<option>Hair Powder</option>
+<option>Hair Serum</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Jumlah Masuk (Unit)</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" min="1" placeholder="Contoh: 12" required="" type="number">
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Catatan Pengadaan (Opsional)</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" placeholder="Nomor faktur vendor / restok mingguan" type="text">
+</div>
+<div class="pt-3 flex items-center justify-end gap-3 border-t border-gray-200">
+<button class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-100" onclick="closeModal('modalStokMasuk')" type="button">
+          Batal
+        </button>
+<button class="px-5 py-2 rounded-xl bg-[#FF7A00] hover:bg-[#e06b00] text-white text-xs font-semibold transition-colors" type="submit">
+          Konfirmasi Masuk
+        </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- MODAL: PENYESUAIAN STOK -->
+<!-- ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 hidden" id="modalPenyesuaian">
+<div class="bg-surface-container-lowest border border-gray-200 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-[#FF7A00]">tune</span>
+<h3 class="text-base font-semibold text-gray-900">Penyesuaian Stok Fisik</h3>
+</div>
+<button class="p-1 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalPenyesuaian')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-4" onsubmit="handleInventoryAction(event, 'modalPenyesuaian', 'Stok fisik berhasil disesuaikan.')">
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Pilih Produk</label>
+<select class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white">
+<option>Pomade Classic (Stok sistem: 24)</option>
+<option>Hair Tonic (Stok sistem: 15)</option>
+<option>Clay Matte (Stok sistem: 18)</option>
+<option>Shampoo Premium (Stok sistem: 12)</option>
+<option>Hair Powder (Stok sistem: 8)</option>
+<option>Hair Serum (Stok sistem: 0)</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Jumlah Stok Fisik Terkoreksi</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" min="0" placeholder="Hasil opname aktual" required="" type="number">
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Alasan Penyesuaian (Wajib)</label>
+<select class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" required="">
+<option value="">Pilih Alasan</option>
+<option>Selisih Stock Opname</option>
+<option>Barang Rusak / Bocor</option>
+<option>Kedaluwarsa</option>
+<option>Koreksi Kesalahan Input</option>
+</select>
+</div>
+<div class="pt-3 flex items-center justify-end gap-3 border-t border-gray-200">
+<button class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-100" onclick="closeModal('modalPenyesuaian')" type="button">
+          Batal
+        </button>
+<button class="px-5 py-2 rounded-xl bg-[#FF7A00] hover:bg-[#e06b00] text-white text-xs font-semibold transition-colors" type="submit">
+          Simpan Penyesuaian
+        </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- MODAL: CATAT PEMAKAIAN OPERASIONAL -->
+<!-- ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 hidden" id="modalPemakaian">
+<div class="bg-surface-container-lowest border border-gray-200 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-[#FF7A00]">content_cut</span>
+<h3 class="text-base font-semibold text-gray-900">Catat Pemakaian Operasional</h3>
+</div>
+<button class="p-1 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" onclick="closeModal('modalPemakaian')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-4" onsubmit="handleInventoryAction(event, 'modalPemakaian', 'Pemakaian operasional berhasil dicatat.')">
+<div class="p-3 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-600">
+        Pemakaian operasional internal mengurangi stok salon dan tidak tercatat sebagai transaksi penjualan pelanggan.
+      </div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Pilih Produk</label>
+<select class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white">
+<option>Pomade Classic</option>
+<option>Hair Tonic</option>
+<option>Clay Matte</option>
+<option>Shampoo Premium</option>
+<option>Hair Powder</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Capster Pengguna</label>
+<select class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white">
+<option>Rizky Pratama (Kursi 01)</option>
+<option>Dimas Arya (Kursi 02)</option>
+<option>Fajar Nugraha (Kursi 03)</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Jumlah Pemakaian (Unit)</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" min="1" required="" type="number" value="1">
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-800 mb-1">Keterangan (Opsional)</label>
+<input class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:border-[#FF7A00] bg-white" placeholder="Buka segel baru untuk meja kerja" type="text">
+</div>
+<div class="pt-3 flex items-center justify-end gap-3 border-t border-gray-200">
+<button class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-100" onclick="closeModal('modalPemakaian')" type="button">
+          Batal
+        </button>
+<button class="px-5 py-2 rounded-xl bg-[#FF7A00] hover:bg-[#e06b00] text-white text-xs font-semibold transition-colors" type="submit">
+          Konfirmasi Pemakaian
+        </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Toast Notification Container -->
+<div class="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 transition-opacity duration-300 opacity-0 pointer-events-none" id="toastNotification">
+<span class="material-symbols-outlined text-green-400 text-[20px]" id="toastIcon">check_circle</span>
+<span class="text-sm font-medium" id="toastMessage">Berhasil</span>
+</div>
+<!-- Unified & Robust JavaScript Engine -->
+<script>
+  let currentTab = 'capster';
+  let pendingDeactivateRowId = null;
+  let pendingDeactivateName = '';
+
+  const tabMeta = {
+    layanan: {
+      actionLabel: 'Tambah Layanan',
+      breadcrumb: 'Katalog Layanan',
+      placeholder: 'Cari layanan...'
+    },
+    produk: {
+      actionLabel: 'Tambah Produk',
+      breadcrumb: 'Inventaris Produk Retail',
+      placeholder: 'Cari produk barcode/nama...'
+    },
+    capster: {
+      actionLabel: 'Tambah Capster',
+      breadcrumb: 'Manajemen Capster',
+      placeholder: 'Cari capster/keahlian...'
+    }
+  };
+
+  function selectCapsterStatusOption(status) {
+    const radioAktif = document.getElementById('statusCapsterAktif');
+    const radioNonaktif = document.getElementById('statusCapsterNonaktif');
+    const labelAktif = document.getElementById('labelStatusAktif');
+    const labelNonaktif = document.getElementById('labelStatusNonaktif');
+    const textAktif = document.getElementById('textStatusAktif');
+    const textNonaktif = document.getElementById('textStatusNonaktif');
+
+    if (status === 'Aktif') {
+      if (radioAktif) radioAktif.checked = true;
+      if (radioNonaktif) radioNonaktif.checked = false;
+      if (labelAktif) {
+        labelAktif.className = 'flex items-center gap-2.5 p-3 rounded-xl border border-[#FF7A00] bg-[#FFF0E0] cursor-pointer transition-all select-none shadow-sm';
+      }
+      if (labelNonaktif) {
+        labelNonaktif.className = 'flex items-center gap-2.5 p-3 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-[#FF7A00] transition-all select-none';
+      }
+      if (textAktif) {
+        textAktif.className = 'text-xs font-medium text-orange-600';
+      }
+      if (textNonaktif) {
+        textNonaktif.className = 'text-xs font-medium text-gray-600';
+      }
+    } else {
+      if (radioAktif) radioAktif.checked = false;
+      if (radioNonaktif) radioNonaktif.checked = true;
+      if (labelAktif) {
+        labelAktif.className = 'flex items-center gap-2.5 p-3 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-[#FF7A00] transition-all select-none';
+      }
+      if (labelNonaktif) {
+        labelNonaktif.className = 'flex items-center gap-2.5 p-3 rounded-xl border border-[#FF7A00] bg-[#FFF0E0] cursor-pointer transition-all select-none shadow-sm';
+      }
+      if (textAktif) {
+        textAktif.className = 'text-xs font-medium text-gray-600';
+      }
+      if (textNonaktif) {
+        textNonaktif.className = 'text-xs font-medium text-orange-600';
+      }
+    }
+  }
+
+  function switchTab(tabId) {
+    if (!['layanan', 'produk', 'capster'].includes(tabId)) tabId = 'capster';
+    currentTab = tabId;
+
+    const tabs = ['layanan', 'produk', 'capster'];
+    tabs.forEach(tab => {
+      const topBtn = document.getElementById('tabBtn-' + tab);
+      const subnav = document.getElementById('subnav-' + tab);
+      const content = document.getElementById('content-' + tab);
+
+      const isActive = (tab === tabId);
+
+      // Top Tab Button Styling
+      if (topBtn) {
+        if (isActive) {
+          topBtn.className = 'flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 bg-white text-[#FF7A00] shadow-sm';
+          topBtn.style.backgroundColor = '#FFFFFF';
+          topBtn.style.color = '#FF7A00';
+        } else {
+          topBtn.className = 'flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent text-gray-500 hover:text-gray-900';
+          topBtn.style.backgroundColor = 'transparent';
+          topBtn.style.color = '#737373';
+        }
+      }
+
+      // Sidebar Submenu Item Styling
+      if (subnav) {
+        if (isActive) {
+          subnav.className = 'text-left px-3 py-2 rounded-lg text-xs font-semibold transition-colors w-full flex items-center gap-2 bg-[#FFF0E0] text-[#FF7A00]';
+          subnav.style.backgroundColor = '#FFF0E0';
+          subnav.style.color = '#FF7A00';
+        } else {
+          subnav.className = 'text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors w-full flex items-center gap-2 bg-transparent text-gray-500 hover:bg-gray-100 hover:text-gray-900';
+          subnav.style.backgroundColor = 'transparent';
+          subnav.style.color = '#737373';
+        }
+      }
+
+      // Content Visibility
+      if (content) {
+        if (isActive) {
+          content.classList.remove('hidden');
+          content.classList.add('flex');
+        } else {
+          content.classList.add('hidden');
+          content.classList.remove('flex');
+        }
+      }
+    });
+
+    // Update Action Button & Breadcrumbs
+    const meta = tabMeta[tabId];
+    const actionLabel = document.getElementById('primaryActionLabel');
+    const breadcrumb = document.getElementById('breadcrumbCurrent');
+    const searchInput = document.getElementById('searchInput');
+
+    if (actionLabel && meta) actionLabel.textContent = meta.actionLabel;
+    if (breadcrumb && meta) breadcrumb.textContent = meta.breadcrumb;
+    if (searchInput && meta) searchInput.placeholder = meta.placeholder;
+  }
+
+  function setImageMode(hasImage, imgSrc = '', filename = 'foto-produk.png', size = '120 KB') {
+    const previewState = document.getElementById('imagePreviewStateContainer');
+    const emptyDropzone = document.getElementById('imageEmptyDropzone');
+    const imgEl = document.getElementById('productImageElement');
+    const statusIndicator = document.getElementById('imageStatusIndicator');
+    const fnEl = document.getElementById('currentImageFilename');
+    const sizeEl = document.getElementById('currentImageSize');
+    const fileInput = document.getElementById('productFileInput');
+
+    if (fileInput) fileInput.value = '';
+
+    if (hasImage) {
+      previewState.classList.remove('hidden');
+      previewState.classList.add('flex');
+      emptyDropzone.classList.add('hidden');
+      emptyDropzone.classList.remove('flex');
+      imgEl.src = imgSrc;
+      fnEl.textContent = filename;
+      sizeEl.textContent = size;
+      statusIndicator.textContent = 'Foto Terpasang';
+      statusIndicator.className = 'text-xs px-2 py-0.5 rounded-full border border-orange-200 bg-[#FFF0E0] text-[#FF7A00] font-medium';
+    } else {
+      previewState.classList.add('hidden');
+      previewState.classList.remove('flex');
+      emptyDropzone.classList.remove('hidden');
+      emptyDropzone.classList.add('flex');
+      statusIndicator.textContent = 'Belum Ada Foto';
+      statusIndicator.className = 'text-xs px-2 py-0.5 rounded-full border border-gray-200 text-gray-500 bg-gray-50';
+    }
+  }
+
+  function handleImageFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const sizeFormatted = (file.size / 1024).toFixed(0) + ' KB';
+      setImageMode(true, e.target.result, file.name, sizeFormatted);
+      showToast('Gambar produk berhasil dimuat.');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removeProductImage() {
+    setImageMode(false);
+    showToast('Foto produk dihapus.');
+  }
+
+  function handlePrimaryActionDedicated() {
+    if (currentTab === 'capster') {
+      openTambahCapsterDedicated();
+    } else if (currentTab === 'produk') {
+      openModalTambahProduk();
+    } else {
+      openModalTambahLayanan();
+    }
+  }
+
+  function openModalTambahProduk() {
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSub = document.getElementById('modalSub');
+    const labelItemName = document.getElementById('labelItemName');
+    const productOnlyFields = document.getElementById('productOnlyFields');
+    const productSkuContainer = document.getElementById('productSkuContainer');
+    const imgContainer = document.getElementById('productImageContainer');
+    const btnSubmit = document.getElementById('btnModalSubmit');
+    const labelStock = document.getElementById('labelItemStock');
+
+    modalTitle.textContent = 'Tambah Produk Retail';
+    modalSub.textContent = 'Lengkapi foto produk, informasi harga, dan kuantitas inventaris.';
+    labelItemName.textContent = 'Nama Produk';
+    labelStock.textContent = 'Stok Awal';
+    btnSubmit.textContent = 'Simpan Produk';
+
+    document.getElementById('inputItemName').value = '';
+    document.getElementById('inputItemSku').value = '';
+    document.getElementById('inputItemPrice').value = '';
+    document.getElementById('inputItemStock').value = '';
+    document.getElementById('inputItemMinStock').value = '5';
+    document.getElementById('toggleItemStatus').checked = true;
+
+    productOnlyFields.classList.remove('hidden');
+    productOnlyFields.classList.add('grid');
+    productSkuContainer.classList.remove('hidden');
+    imgContainer.classList.remove('hidden');
+    imgContainer.classList.add('flex');
+
+    setImageMode(false);
+    openModal('modalFormItem');
+  }
+
+  function openModalTambahLayanan() {
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSub = document.getElementById('modalSub');
+    const labelItemName = document.getElementById('labelItemName');
+    const productOnlyFields = document.getElementById('productOnlyFields');
+    const productSkuContainer = document.getElementById('productSkuContainer');
+    const imgContainer = document.getElementById('productImageContainer');
+    const btnSubmit = document.getElementById('btnModalSubmit');
+
+    modalTitle.textContent = 'Tambah Layanan Baru';
+    modalSub.textContent = 'Daftarkan opsi perawatan atau pangkas rambut baru.';
+    labelItemName.textContent = 'Nama Layanan';
+    btnSubmit.textContent = 'Simpan Layanan';
+
+    document.getElementById('inputItemName').value = '';
+    document.getElementById('inputItemPrice').value = '';
+
+    productOnlyFields.classList.add('hidden');
+    productOnlyFields.classList.remove('grid');
+    productSkuContainer.classList.add('hidden');
+    imgContainer.classList.add('hidden');
+    imgContainer.classList.remove('flex');
+
+    openModal('modalFormItem');
+  }
+
+  function openEditModal(type, name, price, sku = '', stock = '0', minStock = '5', hasImage = false) {
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSub = document.getElementById('modalSub');
+    const labelItemName = document.getElementById('labelItemName');
+    const productOnlyFields = document.getElementById('productOnlyFields');
+    const productSkuContainer = document.getElementById('productSkuContainer');
+    const imgContainer = document.getElementById('productImageContainer');
+    const btnSubmit = document.getElementById('btnModalSubmit');
+    const labelStock = document.getElementById('labelItemStock');
+
+    document.getElementById('inputItemName').value = name;
+    document.getElementById('inputItemPrice').value = price;
+
+    if (type === 'layanan') {
+      modalTitle.textContent = 'Edit Layanan';
+      modalSub.textContent = 'Sesuaikan tarif atau detail layanan terpilih.';
+      labelItemName.textContent = 'Nama Layanan';
+      btnSubmit.textContent = 'Simpan Layanan';
+
+      productOnlyFields.classList.add('hidden');
+      productOnlyFields.classList.remove('grid');
+      productSkuContainer.classList.add('hidden');
+      imgContainer.classList.add('hidden');
+      imgContainer.classList.remove('flex');
+    } else {
+      modalTitle.textContent = 'Edit Produk';
+      modalSub.textContent = 'Sesuaikan detail produk, foto etalase, dan stok inventaris.';
+      labelItemName.textContent = 'Nama Produk';
+      labelStock.textContent = 'Stok Saat Ini';
+      btnSubmit.textContent = 'Simpan Produk';
+
+      document.getElementById('inputItemSku').value = sku;
+      document.getElementById('inputItemStock').value = stock;
+      document.getElementById('inputItemMinStock').value = minStock;
+
+      productOnlyFields.classList.remove('hidden');
+      productOnlyFields.classList.add('grid');
+      productSkuContainer.classList.remove('hidden');
+      imgContainer.classList.remove('hidden');
+      imgContainer.classList.add('flex');
+
+      setImageMode(false);
+    }
+    openModal('modalFormItem');
+  }
+
+  function openModalStokMasukItem(productName) {
+    const select = document.getElementById('selectStokMasukProduct');
+    if (select) {
+      select.value = productName;
+    }
+    openModal('modalStokMasuk');
+  }
+
+  function toggleServiceStatus(btn) {
+    const row = btn.closest('tr');
+    const statusSpan = row.querySelector('td:nth-child(3) span');
+    if (btn.textContent.trim() === 'Nonaktifkan') {
+      btn.textContent = 'Aktifkan';
+      btn.classList.remove('hover:border-red-500', 'hover:text-red-600');
+      btn.classList.add('hover:border-green-600', 'hover:text-green-700');
+      statusSpan.innerHTML = '<span class="w-2 h-2 rounded-full bg-gray-400"></span> Nonaktif';
+      statusSpan.className = 'inline-flex items-center gap-1.5 text-xs font-medium text-gray-400';
+      showToast('Layanan dinonaktifkan dari kasir');
+    } else {
+      btn.textContent = 'Nonaktifkan';
+      btn.classList.add('hover:border-red-500', 'hover:text-red-600');
+      btn.classList.remove('hover:border-green-600', 'hover:text-green-700');
+      statusSpan.innerHTML = '<span class="w-2 h-2 rounded-full bg-green-600"></span> Aktif';
+      statusSpan.className = 'inline-flex items-center gap-1.5 text-xs font-medium text-green-700 status-badge';
+      showToast('Layanan diaktifkan kembali');
+    }
+  }
+
+  function handleCapsterActionClick(rowId) {
+    const row = document.getElementById(rowId);
+    if (!row) return;
+
+    const currentStatus = row.getAttribute('data-status') || 'Aktif';
+    const nameEl = row.querySelector('.capster-name');
+    const capsterName = nameEl ? nameEl.textContent.trim() : 'Capster';
+
+    if (currentStatus === 'Aktif') {
+      openDeactivateConfirmModal(rowId, capsterName);
+    } else {
+      activateCapster(rowId, capsterName);
+    }
+  }
+
+  function openDeactivateConfirmModal(rowId, capsterName) {
+    pendingDeactivateRowId = rowId;
+    pendingDeactivateName = capsterName;
+
+    const title = document.getElementById('confirmTitle');
+    const desc = document.getElementById('confirmDesc');
+    const nameSpan = document.getElementById('confirmCapsterName');
+    const actionBtn = document.getElementById('btnConfirmAction');
+
+    title.textContent = 'Konfirmasi Nonaktifkan Capster';
+    nameSpan.textContent = capsterName;
+    desc.innerHTML = 'Menonaktifkan capster <span class="font-semibold text-gray-900">' + capsterName + '</span> akan mencegah capster ini dipilih dalam transaksi baru di register kasir, namun seluruh riwayat data dan transaksi sebelumnya tetap tersimpan rapi.';
+    actionBtn.textContent = 'Ya, Nonaktifkan';
+
+    openModal('modalConfirmStatus');
+  }
+
+  function executeStatusDeactivate() {
+    closeModal('modalConfirmStatus');
+    if (!pendingDeactivateRowId) return;
+
+    const row = document.getElementById(pendingDeactivateRowId);
+    if (!row) return;
+
+    row.setAttribute('data-status', 'Nonaktif');
+    row.classList.add('bg-gray-50/40');
+
+    const avatar = row.querySelector('.capster-avatar');
+    if (avatar) {
+      avatar.className = 'w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold text-xs capster-avatar';
+      avatar.style.backgroundColor = '#e5e7eb';
+      avatar.style.color = '#6b7280';
+    }
+
+    const name = row.querySelector('.capster-name');
+    if (name) name.className = 'font-medium text-gray-500 capster-name';
+
+    const phone = row.querySelector('.capster-phone');
+    if (phone) phone.className = 'py-4 px-6 text-gray-500 capster-phone';
+
+    const badge = row.querySelector('.status-badge');
+    if (badge) {
+      badge.className = 'inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 status-badge';
+      badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-gray-400"></span> Nonaktif';
+    }
+
+    const actionBtn = row.querySelector('.btn-toggle-status');
+    if (actionBtn) {
+      actionBtn.textContent = 'Aktifkan';
+      actionBtn.className = 'px-3 py-1.5 rounded-lg border border-gray-200 hover:border-green-600 text-xs font-medium text-green-700 transition-colors btn-toggle-status';
+    }
+
+    showToast('Capster berhasil dinonaktifkan');
+    pendingDeactivateRowId = null;
+  }
+
+  function activateCapster(rowId, capsterName) {
+    const row = document.getElementById(rowId);
+    if (!row) return;
+
+    row.setAttribute('data-status', 'Aktif');
+    row.classList.remove('bg-gray-50/40');
+
+    const avatar = row.querySelector('.capster-avatar');
+    if (avatar) {
+      avatar.className = 'w-8 h-8 rounded-full bg-[#FFF0E0] text-[#FF7A00] flex items-center justify-center font-semibold text-xs capster-avatar';
+      avatar.style.backgroundColor = '#FFF0E0';
+      avatar.style.color = '#FF7A00';
+    }
+
+    const name = row.querySelector('.capster-name');
+    if (name) name.className = 'font-medium text-gray-900 capster-name';
+
+    const phone = row.querySelector('.capster-phone');
+    if (phone) phone.className = 'py-4 px-6 text-gray-700 capster-phone';
+
+    const badge = row.querySelector('.status-badge');
+    if (badge) {
+      badge.className = 'inline-flex items-center gap-1.5 text-xs font-medium text-green-700 status-badge';
+      badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-green-600"></span> Aktif';
+    }
+
+    const actionBtn = row.querySelector('.btn-toggle-status');
+    if (actionBtn) {
+      actionBtn.textContent = 'Nonaktifkan';
+      actionBtn.className = 'px-3 py-1.5 rounded-lg border border-gray-200 hover:border-red-500 text-xs font-medium text-gray-500 hover:text-red-600 transition-colors btn-toggle-status';
+    }
+
+    showToast('Capster berhasil diaktifkan');
+  }
+
+  function openTambahCapsterDedicated() {
+    closeModal('modalFormItem');
+    closeModal('modalConfirmStatus');
+    const title = document.getElementById('capsterModalTitle');
+    const btnSubmit = document.getElementById('btnCapsterSubmit');
+    title.textContent = 'Tambah Capster';
+    btnSubmit.textContent = 'Simpan Capster';
+
+    document.getElementById('editCapsterRowId').value = '';
+    document.getElementById('inputCapsterName').value = '';
+    document.getElementById('inputCapsterPhone').value = '';
+    selectCapsterStatusOption('Aktif');
+
+    openModal('modalCapsterForm');
+  }
+
+  function openEditCapsterDedicated(name, phone, status) {
+    closeModal('modalFormItem');
+    closeModal('modalConfirmStatus');
+    const title = document.getElementById('capsterModalTitle');
+    const btnSubmit = document.getElementById('btnCapsterSubmit');
+    title.textContent = 'Edit Capster';
+    btnSubmit.textContent = 'Simpan Perubahan';
+
+    const rows = document.querySelectorAll('#capsterTableBody tr');
+    let targetRowId = '';
+    rows.forEach(r => {
+      const n = r.querySelector('.capster-name');
+      if (n && n.textContent.trim() === name) {
+        targetRowId = r.id;
+      }
+    });
+    document.getElementById('editCapsterRowId').value = targetRowId;
+
+    document.getElementById('inputCapsterName').value = name;
+    document.getElementById('inputCapsterPhone').value = phone || '';
+    selectCapsterStatusOption(status === 'Nonaktif' ? 'Nonaktif' : 'Aktif');
+
+    openModal('modalCapsterForm');
+  }
+
+  function handleCapsterFormSubmit(e) {
+    e.preventDefault();
+    const rowId = document.getElementById('editCapsterRowId').value;
+    const name = document.getElementById('inputCapsterName').value.trim();
+    const phone = document.getElementById('inputCapsterPhone').value.trim();
+    const isAktif = document.getElementById('statusCapsterAktif').checked;
+    const targetStatus = isAktif ? 'Aktif' : 'Nonaktif';
+
+    if (rowId && document.getElementById(rowId)) {
+      const row = document.getElementById(rowId);
+      const nameEl = row.querySelector('.capster-name');
+      const phoneEl = row.querySelector('.capster-phone');
+      if (nameEl) nameEl.textContent = name;
+      if (phoneEl) phoneEl.textContent = phone || '-';
+
+      const avatar = row.querySelector('.capster-avatar');
+      if (avatar && name) {
+        const parts = name.split(' ');
+        const initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : parts[0].substring(0, 2).toUpperCase();
+        avatar.textContent = initials;
+      }
+
+      if (targetStatus === 'Aktif') {
+        activateCapster(rowId, name);
+      } else {
+        pendingDeactivateRowId = rowId;
+        executeStatusDeactivate();
+      }
+
+      const editBtn = row.querySelector('button[onclick^="openEditCapsterDedicated"]');
+      if (editBtn) {
+        editBtn.setAttribute('onclick', `openEditCapsterDedicated('${name}', '${phone}', '${targetStatus}')`);
+      }
+
+      showToast('Data capster ' + name + ' berhasil diperbarui');
+    } else {
+      const tbody = document.getElementById('capsterTableBody');
+      const newId = 'capster-row-' + (tbody.children.length + 1);
+      const parts = name.split(' ');
+      const initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.substring(0, 2).toUpperCase();
+
+      const tr = document.createElement('tr');
+      tr.id = newId;
+      tr.setAttribute('data-status', targetStatus);
+      tr.className = `hover:bg-gray-50/70 transition-colors ${!isAktif ? 'bg-gray-50/40' : ''}`;
+
+      tr.innerHTML = `
+        <td class="py-4 px-6">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full ${isAktif ? 'bg-[#FFF0E0] text-[#FF7A00]' : 'bg-gray-200 text-gray-500'} flex items-center justify-center font-semibold text-xs capster-avatar">
+              ${initials}
+            </div>
+            <div>
+              <div class="font-medium ${isAktif ? 'text-gray-900' : 'text-gray-500'} capster-name">${name}</div>
+            </div>
+          </div>
+        </td>
+        <td class="py-4 px-6 ${isAktif ? 'text-gray-700' : 'text-gray-500'} capster-phone">
+          ${phone || '-'}
+        </td>
+        <td class="py-4 px-6">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium ${isAktif ? 'text-green-700' : 'text-gray-400'} status-badge">
+            <span class="w-2 h-2 rounded-full ${isAktif ? 'bg-green-600' : 'bg-gray-400'}"></span>
+            ${targetStatus}
+          </span>
+        </td>
+        <td class="py-4 px-6 text-right">
+          <div class="inline-flex items-center gap-2">
+            <button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-[#FF7A00] text-xs font-medium text-gray-700 hover:text-[#FF7A00] transition-colors" onclick="openEditCapsterDedicated('${name}', '${phone}', '${targetStatus}')">
+              Edit
+            </button>
+            <button class="px-3 py-1.5 rounded-lg border border-gray-200 ${isAktif ? 'hover:border-red-500 text-gray-500 hover:text-red-600' : 'hover:border-green-600 text-green-700'} text-xs font-medium transition-colors btn-toggle-status" onclick="handleCapsterActionClick('${newId}')">
+              ${isAktif ? 'Nonaktifkan' : 'Aktifkan'}
+            </button>
+          </div>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+      document.getElementById('capsterCountLabel').textContent = `Menampilkan ${tbody.children.length} capster terdaftar`;
+      showToast('Capster ' + name + ' berhasil ditambahkan');
+    }
+
+    closeModal('modalCapsterForm');
+  }
+
+  function filterCapsterStatus(status) {
+    const rows = document.querySelectorAll('#capsterTableBody tr');
+    let visibleCount = 0;
+    rows.forEach(r => {
+      const rowStatus = r.getAttribute('data-status');
+      if (status === 'all' || (status === 'active' && rowStatus === 'Aktif') || (status === 'inactive' && rowStatus === 'Nonaktif')) {
+        r.style.display = '';
+        visibleCount++;
+      } else {
+        r.style.display = 'none';
+      }
+    });
+    document.getElementById('capsterCountLabel').textContent = `Menampilkan ${visibleCount} capster terdaftar`;
+  }
+
+  function resetCapsterFilters() {
+    document.getElementById('statusFilter').value = 'all';
+    document.getElementById('searchInput').value = '';
+    filterCapsterStatus('all');
+    showToast('Data capster dimuat ulang');
+  }
+
+  function openModal(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('hidden');
+  }
+
+  function closeModal(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.add('hidden');
+  }
+
+  function handleItemSubmit(e) {
+    e.preventDefault();
+    closeModal('modalFormItem');
+    showToast('Perubahan data berhasil disimpan.');
+  }
+
+  function handleInventoryAction(e, modalId, message) {
+    e.preventDefault();
+    closeModal(modalId);
+    showToast(message);
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMessage');
+    toastMsg.textContent = msg;
+    toast.classList.remove('opacity-0', 'pointer-events-none');
+    toast.classList.add('opacity-100');
+    setTimeout(() => {
+      toast.classList.remove('opacity-100');
+      toast.classList.add('opacity-0', 'pointer-events-none');
+    }, 2600);
+  }
+
+  // Toggle Sidebar Submenu
+  const navToggle = document.getElementById('navManajemenToggle');
+  const subnav = document.getElementById('subnavManajemen');
+  const chevron = document.getElementById('chevronManajemen');
+  let isSubnavOpen = true;
+
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      isSubnavOpen = !isSubnavOpen;
+      if (isSubnavOpen) {
+        subnav.classList.remove('hidden');
+        chevron.style.transform = 'rotate(0deg)';
+      } else {
+        subnav.classList.add('hidden');
+        chevron.style.transform = 'rotate(-90deg)';
+      }
+    });
+  }
+
+  // Close modals on ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal('modalFormItem');
+      closeModal('modalCapsterForm');
+      closeModal('modalConfirmStatus');
+      closeModal('modalStokMasuk');
+      closeModal('modalPenyesuaian');
+      closeModal('modalPemakaian');
+    }
+  });
+
+  // Init explicitly on Capster tab
+  window.addEventListener('DOMContentLoaded', () => {
+    switchTab('capster');
+  });
+</script>
+
+
+
+
+</body></html>

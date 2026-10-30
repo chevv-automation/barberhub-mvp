@@ -1,0 +1,1196 @@
+<!DOCTYPE html><html lang="id" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BarberHub POS - Transaksi Kasir</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error-container": "#ffdad6",
+            "error": "#ba1a1a",
+            "outline-variant": "#c0c9c3",
+            "tertiary-container": "#2d4a40",
+            "on-tertiary-container": "#99b9ac",
+            "on-background": "#181d1c",
+            "inverse-surface": "#2c3130",
+            "on-primary-fixed-variant": "#1d4f40",
+            "on-error": "#ffffff",
+            "surface-variant": "#dfe3e1",
+            "on-tertiary-fixed": "#022018",
+            "primary": "#003629",
+            "secondary": "#286a51",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-container": "#8abda9",
+            "on-secondary-fixed": "#002115",
+            "tertiary-fixed": "#c9eadc",
+            "primary-fixed-dim": "#9ed1bd",
+            "surface-container": "#eaefed",
+            "primary-fixed": "#baeed9",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#dfe3e1",
+            "surface-tint": "#376757",
+            "surface-container-low": "#f0f5f2",
+            "primary-container": "#1b4d3e",
+            "surface-container-high": "#e5e9e7",
+            "secondary-fixed-dim": "#92d4b6",
+            "tertiary": "#16332a",
+            "on-tertiary": "#ffffff",
+            "secondary-container": "#aef1d1",
+            "on-error-container": "#93000a",
+            "surface": "#f6faf8",
+            "on-surface": "#181d1c",
+            "surface-dim": "#d6dbd9",
+            "tertiary-fixed-dim": "#adcec0",
+            "on-primary-fixed": "#002117",
+            "surface-bright": "#f6faf8",
+            "outline": "#707974",
+            "on-surface-variant": "#404945",
+            "on-secondary-fixed-variant": "#05513a",
+            "background": "#f6faf8",
+            "on-tertiary-fixed-variant": "#2f4c42",
+            "secondary-fixed": "#aef1d1",
+            "inverse-primary": "#9ed1bd",
+            "on-secondary-container": "#2f7057",
+            "on-primary": "#ffffff",
+            "inverse-on-surface": "#edf2f0"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Prevent text clipping / wrapping artifacts */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+<style>
+body { background-color: #F5F5F5 !important; color: #1A1A1A !important; }
+.bg-primary, [class*="bg-primary"], .bg-\[\#1b4d3e\], .bg-\[\#1B4D3E\] { background-color: #FF7A00 !important; color: #FFFFFF !important; }
+.text-primary, [class*="text-primary"], .text-\[\#1b4d3e\] { color: #FF7A00 !important; }
+.border-primary, [class*="border-primary"] { border-color: #FF7A00 !important; }
+aside .bg-primary, aside .bg-primary-container { background-color: #1A1A1A !important; color: #FFFFFF !important; }
+aside nav a.bg-surface-container-low, aside nav a.bg-surface-container { background-color: #FFF0E0 !important; color: #FF7A00 !important; }
+aside nav a.bg-surface-container-low span, aside nav a.bg-surface-container span { color: #FF7A00 !important; }
+#btn-checkout, button[id*="checkout"] { background-color: #FF7A00 !important; color: #FFFFFF !important; }
+.tab-active, [data-active="true"] { color: #FF7A00 !important; border-color: #FF7A00 !important; }
+#tab-produk { border-color: #FF7A00 !important; color: #FF7A00 !important; }
+#sidebar-nav .bg-secondary { background-color: #16A34A !important; }
+</style><style>#success-modal .bg-secondary-container, #success-modal [class*="bg-secondary"] { background-color: #FFF0E0 !important; } #success-modal .text-primary, #success-modal .material-symbols-outlined { color: #FF7A00 !important; } #qris-payment-section .bg-secondary-container { background-color: #FFF0E0 !important; color: #FF7A00 !important; }</style><link rel="stylesheet" href="assets/motion.css"/>
+<script src="assets/shell.js"></script>
+<script src="assets/motion.js"></script>
+</head>
+<body class="bg-background text-on-surface antialiased h-screen w-screen overflow-hidden flex text-[14px] leading-5">
+<!-- Left Navigation Sidebar (Fixed 256px / w-64) -->
+<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between bg-surface-container-lowest border-r border-outline-variant/60 z-30 shrink-0" id="sidebar-nav">
+<div class="flex flex-col">
+<!-- Brand Header -->
+<div class="px-5 pt-5 pb-5 border-b border-outline-variant/40">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg shrink-0" style="background-color: #FF7A00; color: #FFFFFF;">B</div>
+    <span class="text-[15px] font-semibold text-[#1A1A1A] tracking-tight">BarberHub POS</span>
+  </div>
+</div>
+<!-- Main Navigation -->
+<nav class="px-3 py-4 flex flex-col gap-1">
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] text-[14px] font-medium transition-colors" href="dashboard.html">
+    <span class="material-symbols-outlined text-[20px]">dashboard</span>
+    <span class="whitespace-nowrap">Dashboard</span>
+  </a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold transition-colors" href="cashier.html" style="background-color: #FFF0E0; color: #FF7A00;">
+    <span class="material-symbols-outlined text-[20px]" style="color: #FF7A00;">shopping_cart</span>
+    <span class="whitespace-nowrap">Transaksi</span>
+  </a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] text-[14px] font-medium transition-colors" href="management.html">
+    <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+    <span class="whitespace-nowrap">Manajemen</span>
+  </a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] text-[14px] font-medium transition-colors" href="history.html">
+    <span class="material-symbols-outlined text-[20px]">history</span>
+    <span class="whitespace-nowrap">Riwayat</span>
+  </a>
+</nav>
+</div>
+<!-- Sidebar Bottom Section -->
+<div class="px-3 pb-4 pt-2 border-t border-outline-variant/40 flex flex-col gap-1">
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] text-[14px] font-medium transition-colors" href="settings.html">
+    <span class="material-symbols-outlined text-[20px]">settings</span>
+    <span>Pengaturan</span>
+  </a>
+  <a href="login.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-red-50 hover:text-red-600 text-[14px] font-medium transition-colors">
+    <span class="material-symbols-outlined text-[20px]">logout</span>
+    <span>Keluar</span>
+  </a>
+</div>
+</aside>
+<!-- Main Application Wrapper (Pushed 256px to right for desktop) -->
+<div class="flex-1 flex flex-col h-screen w-full transition-all duration-200 overflow-hidden pl-64" id="main-content-wrapper">
+<!-- Top Work Header -->
+<header class="h-16 px-6 bg-surface-container-lowest border-b border-outline-variant/60 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-[14px]"><span class="text-[#737373] font-normal">BarberHub POS</span><span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span><span class="text-[#1A1A1A] font-medium">Transaksi</span></div></header>
+<!-- Operational Split Workspace: 12 Cols (7 Cols Catalog ~58%, 5 Cols Cart ~42%) -->
+<main class="flex-1 grid grid-cols-12 gap-0 overflow-hidden bg-background">
+<!-- Left Column: Catalog (~60% approx -> 7 cols) -->
+<section class="col-span-7 flex flex-col h-full border-r border-outline-variant/60 bg-background overflow-hidden">
+<!-- Catalog Navigation & Search Bar -->
+<div class="p-5 pb-3 border-b border-outline-variant/60 bg-surface-container-lowest flex flex-col gap-3 shrink-0">
+<div class="flex gap-6 border-b border-outline-variant/50">
+<button class="pb-2.5 text-[15px] font-semibold text-primary border-b-2 border-primary transition-colors cursor-pointer" id="tab-layanan">
+              Layanan
+            </button>
+<button class="pb-2.5 text-[15px] font-medium text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" id="tab-produk">
+              Produk
+            </button>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px]" style="color: rgb(255, 122, 0) !important;">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface placeholder:text-outline text-[14px] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" id="search-input" placeholder="Cari layanan..." type="text">
+</div>
+</div>
+<!-- Catalog Items Grid Container -->
+<div class="flex-1 overflow-y-auto p-5">
+<!-- Services Grid (Layanan) -->
+<div class="grid grid-cols-2 gap-3.5" id="grid-layanan">
+            <div onclick="addToCart('s1', 'Layanan')" class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex flex-col justify-between h-28 shadow-xs">
+              <span class="text-[15px] font-semibold text-on-surface leading-snug">Potong Rambut</span>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                <span class="text-[15px] text-primary tabular-nums font-semibold">Rp35.000</span>
+              </div>
+            </div>
+          
+            <div onclick="addToCart('s2', 'Layanan')" class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex flex-col justify-between h-28 shadow-xs">
+              <span class="text-[15px] font-semibold text-on-surface leading-snug">Haircut + Wash</span>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                <span class="text-[15px] text-primary tabular-nums font-semibold">Rp50.000</span>
+              </div>
+            </div>
+          
+            <div onclick="addToCart('s3', 'Layanan')" class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex flex-col justify-between h-28 shadow-xs">
+              <span class="text-[15px] font-semibold text-on-surface leading-snug">Hair Wash</span>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                <span class="text-[15px] text-primary tabular-nums font-semibold">Rp15.000</span>
+              </div>
+            </div>
+          
+            <div onclick="addToCart('s4', 'Layanan')" class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex flex-col justify-between h-28 shadow-xs">
+              <span class="text-[15px] font-semibold text-on-surface leading-snug">Hair Styling</span>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                <span class="text-[15px] text-primary tabular-nums font-semibold">Rp25.000</span>
+              </div>
+            </div>
+          
+            <div onclick="addToCart('s5', 'Layanan')" class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex flex-col justify-between h-28 shadow-xs">
+              <span class="text-[15px] font-semibold text-on-surface leading-snug">Haircut + Styling</span>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                <span class="text-[15px] text-primary tabular-nums font-semibold">Rp55.000</span>
+              </div>
+            </div>
+          
+            <div onclick="addToCart('s6', 'Layanan')" class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex flex-col justify-between h-28 shadow-xs">
+              <span class="text-[15px] font-semibold text-on-surface leading-snug">Haircut + Wash + Styling</span>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                <span class="text-[15px] text-primary tabular-nums font-semibold">Rp65.000</span>
+              </div>
+            </div>
+          </div>
+<!-- Products Grid (Produk) -->
+<div class="grid grid-cols-2 gap-3.5 hidden" id="grid-produk">
+<div class="p-3.5 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex gap-3.5 items-center shadow-xs" onclick="addToCart('p1', 'Produk')">
+<div class="w-16 h-16 rounded-lg bg-[#E8ECE9] border border-outline-variant/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-[24px]">image</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+<span class="text-[14px] font-semibold text-on-surface truncate leading-tight">Pomade Classic</span>
+<div class="mt-0.5"><span class="text-[12px] text-on-surface-variant">Stok: 8</span></div>
+<span class="text-[14px] text-primary tabular-nums font-semibold mt-1">Rp65.000</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex gap-3.5 items-center shadow-xs" onclick="addToCart('p2', 'Produk')">
+<div class="w-16 h-16 rounded-lg bg-[#E8ECE9] border border-outline-variant/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-[24px]">image</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+<span class="text-[14px] font-semibold text-on-surface truncate leading-tight">Hair Tonic</span>
+<div class="mt-0.5"><span class="text-[12px] text-on-surface-variant">Stok: 5</span></div>
+<span class="text-[14px] text-primary tabular-nums font-semibold mt-1">Rp45.000</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex gap-3.5 items-center shadow-xs" onclick="addToCart('p3', 'Produk')">
+<div class="w-16 h-16 rounded-lg bg-[#E8ECE9] border border-outline-variant/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-[24px]">image</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+<span class="text-[14px] font-semibold text-on-surface truncate leading-tight">Clay Matte</span>
+<div class="mt-0.5"><span class="text-[12px] text-on-surface-variant">Stok: 12</span></div>
+<span class="text-[14px] text-primary tabular-nums font-semibold mt-1">Rp55.000</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex gap-3.5 items-center shadow-xs" onclick="addToCart('p4', 'Produk')">
+<div class="w-16 h-16 rounded-lg bg-[#E8ECE9] border border-outline-variant/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-[24px]">image</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+<span class="text-[14px] font-semibold text-on-surface truncate leading-tight">Shampoo Premium</span>
+<div class="mt-0.5"><span class="text-[12px] text-on-surface-variant">Stok: 4</span></div>
+<span class="text-[14px] text-primary tabular-nums font-semibold mt-1">Rp75.000</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex gap-3.5 items-center shadow-xs" onclick="addToCart('p5', 'Produk')">
+<div class="w-16 h-16 rounded-lg bg-[#E8ECE9] border border-outline-variant/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-[24px]">image</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+<span class="text-[14px] font-semibold text-on-surface truncate leading-tight">Hair Powder</span>
+<div class="mt-0.5"><span class="text-[12px] text-on-surface-variant">Stok: 6</span></div>
+<span class="text-[14px] text-primary tabular-nums font-semibold mt-1">Rp40.000</span>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-high/40 border border-outline-variant/60 cursor-not-allowed opacity-60 flex gap-3.5 items-center">
+<div class="w-16 h-16 rounded-lg bg-[#E8ECE9] border border-outline-variant/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-[24px]">image</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+<span class="text-[14px] font-semibold text-on-surface truncate leading-tight">Hair Serum</span>
+<div class="mt-0.5"><span class="text-[12px] text-outline">Stok habis</span></div>
+<span class="text-[14px] text-primary tabular-nums font-semibold mt-1">Rp60.000</span>
+</div>
+</div>
+</div>
+<!-- Empty search result fallback -->
+<div class="hidden py-16 text-center flex flex-col items-center justify-center" id="catalog-empty-state">
+<span class="material-symbols-outlined text-outline text-[36px] mb-2">search_off</span>
+<p class="text-[15px] font-semibold text-on-surface">Item tidak ditemukan</p>
+<p class="text-[13px] text-on-surface-variant">Coba periksa kata kunci pencarian Anda</p>
+</div>
+</div>
+</section>
+<!-- Right Column: Current Transaction / Cart (~40% approx -> 5 cols) -->
+<section class="col-span-5 flex flex-col h-full bg-surface-container-lowest overflow-hidden">
+<!-- Cart Panel Header -->
+<div class="px-5 py-4 border-b border-outline-variant/60 flex items-center justify-between bg-surface-container-lowest shrink-0">
+<div>
+<h2 class="text-[16px] font-semibold text-on-surface leading-tight">Transaksi Saat Ini</h2>
+<p class="text-[12px] text-on-surface-variant leading-tight mt-0.5">Transaksi Baru</p>
+</div>
+<button class="text-[13px] font-medium text-error hover:underline transition-colors cursor-pointer" id="clear-cart-btn">
+            Kosongkan
+          </button>
+</div>
+<!-- Cart Items List (Scrollable Area) -->
+<div class="flex-1 overflow-y-auto px-5 py-2 flex flex-col divide-y divide-outline-variant/40" id="cart-items-container">
+            <div class="py-3 flex items-center justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="text-[14px] font-semibold text-on-surface truncate">Haircut + Wash + Styling</span>
+                </div>
+                <div class="flex items-center gap-2 mt-0.5">
+                  <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                  <span class="text-[12px] text-outline-variant">·</span>
+                  <span class="text-[12px] text-on-surface-variant tabular-nums">Rp65.000</span>
+                </div>
+              </div>
+
+              <!-- Quantity Stepper -->
+              <div class="flex items-center gap-1 bg-surface-container-low rounded-lg p-0.5 border border-outline-variant">
+                <button onclick="updateQty('s6', -1)" class="w-6 h-6 flex items-center justify-center rounded text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer ">
+                  <span class="material-symbols-outlined text-[15px]">remove</span>
+                </button>
+                <span class="w-6 text-center text-[13px] font-semibold tabular-nums text-on-surface">3</span>
+                <button onclick="updateQty('s6', 1)" class="w-6 h-6 flex items-center justify-center rounded text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer ">
+                  <span class="material-symbols-outlined text-[15px]">add</span>
+                </button>
+              </div>
+
+              <!-- Subtotal & Delete -->
+              <div class="flex items-center gap-3">
+                <span class="text-[14px] text-on-surface tabular-nums font-semibold w-24 text-right">
+                  Rp195.000
+                </span>
+                <button onclick="removeFromCart('s6')" class="text-outline hover:text-error transition-colors p-1 rounded-lg cursor-pointer" title="Hapus">
+                  <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+<!-- Empty Cart State -->
+<div class="flex-1 flex-col items-center justify-center p-6 text-center flex hidden" id="cart-empty-view">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center mb-3 mx-auto">
+<span class="material-symbols-outlined text-outline text-[24px]">receipt_long</span>
+</div>
+<p class="text-[15px] font-semibold text-on-surface">Belum ada item</p>
+<p class="text-[13px] text-on-surface-variant mt-0.5">Pilih layanan atau produk untuk memulai transaksi.</p>
+</div>
+<!-- Cart Controls & Summary Panel (Anchored to Bottom) -->
+<div class="p-5 border-t border-outline-variant/60 bg-surface-container-lowest flex flex-col gap-3.5 shrink-0 shadow-sm">
+<!-- Capster Selection -->
+<div class="flex flex-col gap-1.5" id="capster-container">
+<div class="flex items-center justify-between">
+<label class="text-[13px] font-semibold text-on-surface" for="capster-select">Capster</label>
+<span class="text-[12px] font-medium text-secondary" id="capster-hint">Wajib jika ada layanan</span>
+</div>
+<select class="w-full px-3 py-2 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface text-[14px] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" id="capster-select"><option disabled="" selected="" value="">Pilih Capster</option><option value="Budi">Budi</option><option value="Rizky">Rizky</option><option value="Dimas">Dimas</option><option value="Fajar">Fajar</option></select>
+<p class="text-[12px] text-error hidden leading-tight" id="capster-validation-msg">Silakan pilih capster untuk melanjutkan pesanan layanan.</p>
+</div>
+<!-- Discount Section (Optional & Collapsed by Default) -->
+<div class="flex flex-col gap-2.5 pt-1" id="discount-wrapper">
+<label class="flex items-center gap-2.5 cursor-pointer select-none text-[13px] font-medium text-on-surface">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" id="discount-toggle-checkbox" type="checkbox">
+<span class="">Gunakan Diskon</span>
+</label>
+<!-- Hidden by default controls container -->
+<div class="flex flex-col gap-2.5 p-3 rounded-xl bg-surface-container-low border border-outline-variant/70 transition-all hidden" id="discount-controls-container">
+<div class="flex items-center justify-between">
+<span class="text-[12px] font-semibold text-on-surface">Jenis Diskon</span>
+<div class="flex items-center rounded-lg border border-outline-variant p-0.5 bg-surface-container-lowest text-[12px] font-medium">
+<button class="px-2.5 py-0.5 rounded-md bg-surface-container text-primary font-semibold shadow-xs transition-colors cursor-pointer" id="discount-type-nominal" type="button">Nominal (Rp)</button>
+<button class="px-2.5 py-0.5 rounded-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" id="discount-type-percent" type="button">Persentase (%)</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-[12px] font-medium text-on-surface-variant" for="discount-input">Nilai Diskon</label>
+<div class="relative" id="discount-input-box">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[14px]" id="discount-prefix">Rp</span>
+<input class="w-full pl-9 pr-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface text-[14px] tabular-nums focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="discount-input" min="0" placeholder="0" type="number" value="0">
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[14px] hidden" id="discount-suffix">%</span>
+</div>
+<p class="text-[11px] text-error hidden leading-tight mt-0.5" id="discount-validation-hint"></p>
+</div>
+</div>
+</div>
+<!-- Totals Breakdown -->
+<div class="flex flex-col gap-1.5 pt-2 border-t border-outline-variant/50">
+<div class="flex justify-between text-[13px] text-on-surface-variant">
+<span class="">Subtotal</span>
+<span class="tabular-nums font-medium text-on-surface" id="summary-subtotal">Rp195.000</span>
+</div>
+<div class="flex justify-between text-[13px] text-on-surface-variant" id="summary-discount-row">
+<span class="">Diskon</span>
+<span class="tabular-nums font-medium text-secondary" id="summary-discount">Rp0</span>
+</div>
+<div class="flex justify-between items-baseline pt-1.5 border-t border-outline-variant/30">
+<span class="text-[15px] font-semibold text-on-surface">Total</span>
+<span class="text-[22px] font-bold text-primary tabular-nums" id="summary-total">Rp195.000</span>
+</div>
+</div>
+<!-- Checkout Trigger Button -->
+<button class="w-full py-3 px-4 rounded-xl bg-primary text-on-primary font-semibold text-[15px] hover:bg-[#153e32] active:scale-[0.98] transition-all disabled:opacity-40 disabled:pointer-events-none disabled:active:scale-100 shadow-sm" id="btn-checkout" style="background-color: rgb(255, 122, 0); color: rgb(255, 255, 255);">
+            Lanjut ke Pembayaran
+          </button>
+</div>
+</section>
+</main>
+</div>
+<!-- Modal Dialog: Pembayaran -->
+<div class="fixed inset-0 z-50 bg-[#16332a]/40 backdrop-blur-xs flex items-center justify-center p-4 hidden" id="payment-modal">
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant w-full max-w-lg shadow-xl overflow-hidden flex flex-col">
+<!-- Modal Header -->
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<div>
+<h3 class="text-[18px] font-semibold text-primary">Pembayaran</h3>
+<p class="text-[13px] text-on-surface-variant">Pilih metode dan selesaikan transaksi kasir</p>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded-lg cursor-pointer" id="modal-close-x">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-6 flex flex-col gap-5 max-h-[75vh] overflow-y-auto">
+<!-- Total Payable Banner -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant flex justify-between items-center">
+<div class="flex flex-col">
+<span class="text-[14px] text-on-surface-variant">Total Pembayaran</span>
+<span class="text-[12px] text-on-surface-variant mt-0.5" id="modal-capster-indicator">Capster: Budi</span>
+</div>
+<span class="text-[22px] font-bold text-primary tabular-nums" id="modal-total-display">Rp175.000</span>
+</div>
+<!-- Payment Method Tabs -->
+<div class="flex flex-col gap-2">
+<label class="text-[13px] font-semibold text-on-surface">Metode Pembayaran</label>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col p-3 rounded-xl border-2 border-primary bg-surface-container-low text-left transition-all cursor-pointer" id="method-cash-btn">
+<span class="text-[15px] font-semibold text-primary">Tunai</span>
+<span class="text-[12px] text-on-surface-variant">Pembayaran dengan uang tunai</span>
+</button>
+<button class="flex flex-col p-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-left hover:bg-surface-container transition-all cursor-pointer" id="method-qris-btn">
+<span class="text-[15px] font-semibold text-on-surface">QRIS</span>
+<span class="text-[12px] text-on-surface-variant">Pembayaran melalui QRIS</span>
+</button>
+</div>
+</div>
+<!-- Tunai View -->
+<div class="flex flex-col gap-4" id="cash-payment-section">
+<div class="flex flex-col gap-1.5">
+<label class="text-[13px] font-semibold text-on-surface" for="cash-received-input">Uang Diterima</label>
+<div class="relative">
+<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[14px]">Rp</span>
+<input class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface text-[14px] tabular-nums focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="cash-received-input" type="number" value="0">
+</div>
+<p class="text-[12px] text-error hidden" id="cash-validation-msg">Uang yang diterima belum mencukupi.</p>
+</div>
+<!-- Quick Cash Amount Buttons -->
+<div class="flex flex-wrap gap-2">
+<button class="quick-cash-btn px-3 py-1.5 rounded-lg border border-outline-variant text-[13px] font-medium text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer" data-val="50000">Rp50.000</button>
+<button class="quick-cash-btn px-3 py-1.5 rounded-lg border border-outline-variant text-[13px] font-medium text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer" data-val="100000">Rp100.000</button>
+<button class="quick-cash-btn px-3 py-1.5 rounded-lg border border-outline-variant text-[13px] font-medium text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer" data-val="150000">Rp150.000</button>
+<button class="quick-cash-btn px-3 py-1.5 rounded-lg border border-outline-variant text-[13px] font-medium text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer" data-val="200000">Rp200.000</button>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant text-[13px] font-semibold text-primary hover:bg-surface-container active:scale-[0.98] cursor-pointer" id="quick-cash-exact">Uang Pas</button>
+</div>
+<!-- Change / Kembalian Calculation -->
+<div class="p-3.5 rounded-xl bg-surface-container border border-outline-variant flex justify-between items-center">
+<span class="text-[14px] font-medium text-on-surface">Kembalian</span>
+<span class="text-[16px] font-bold text-primary tabular-nums" id="cash-change-display">Rp0</span>
+</div>
+</div>
+<!-- QRIS View -->
+<div class="flex flex-col gap-4 hidden" id="qris-payment-section">
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant flex flex-col items-center gap-3 text-center">
+<div class="w-12 h-12 rounded-full bg-[#FFF0E0] flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[26px]" style="color: #FF7A00 !important;">qr_code_2</span></div>
+<p class="text-[13px] text-on-surface leading-normal">Tunjukkan QRIS kasir pada pelanggan, lalu konfirmasi tanda centang setelah dana masuk.</p>
+</div>
+<label class="flex items-center gap-3 p-3.5 rounded-xl border border-outline-variant cursor-pointer hover:bg-surface-container-low">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant cursor-pointer" id="qris-received-check" type="checkbox">
+<span class="text-[13px] font-medium text-on-surface">Pembayaran Sudah Diterima</span>
+</label>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 border-t border-outline-variant bg-surface-container-lowest flex justify-end gap-3">
+<button class="px-4 py-2.5 rounded-xl border border-outline-variant text-on-surface hover:bg-surface-container text-[14px] font-medium active:scale-[0.98] cursor-pointer" id="btn-cancel-modal">
+          Kembali
+        </button>
+<button class="px-5 py-2.5 rounded-xl bg-primary text-on-primary hover:bg-[#153e32] text-[14px] font-semibold active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none cursor-pointer" id="btn-confirm-transaction" disabled="">Konfirmasi Transaksi</button>
+</div>
+</div>
+</div>
+<!-- Modal Dialog: Status Berhasil (Success State) -->
+<div class="fixed inset-0 z-50 bg-[#16332a]/40 backdrop-blur-xs flex items-center justify-center p-4 hidden" id="success-modal">
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant w-full max-w-md shadow-xl overflow-hidden flex flex-col">
+<div class="p-6 flex flex-col items-center text-center">
+<div class="w-12 h-12 rounded-xl bg-[#FFF0E0] text-primary flex items-center justify-center mb-3"><span class="material-symbols-outlined text-[28px] text-primary" style="color: #FF7A00 !important;">check_circle</span></div>
+<h3 class="text-[20px] font-bold text-primary">Transaksi Berhasil</h3>
+<p class="text-[13px] text-on-surface-variant mt-0.5">Pembayaran telah tercatat di dalam sistem</p>
+<!-- Receipt Summary Box -->
+<div class="w-full mt-5 p-4 rounded-xl bg-surface-container-low border border-outline-variant flex flex-col gap-2.5 text-left text-[13px]">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Nomor Transaksi</span>
+<span class="font-medium text-on-surface" id="succ-no">BH-20261030-351</span>
+</div>
+<div class="flex justify-between" id="succ-capster-row">
+<span class="text-on-surface-variant">Capster</span>
+<span class="font-medium text-on-surface" id="succ-capster">Budi</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Metode</span>
+<span class="font-medium text-on-surface" id="succ-method">Tunai</span>
+</div>
+<div class="flex justify-between border-t border-outline-variant/50 pt-2 font-semibold">
+<span class="text-on-surface">Total Pembayaran</span>
+<span class="text-primary tabular-nums" id="succ-total">Rp175.000</span>
+</div>
+<div class="flex flex-col gap-1 pt-1.5 border-t border-outline-variant/40" id="succ-cash-details">
+<div class="flex justify-between text-[12px]">
+<span class="text-on-surface-variant">Uang Diterima</span>
+<span class="tabular-nums text-on-surface" id="succ-received">Rp175.000</span>
+</div>
+<div class="flex justify-between text-[12px]">
+<span class="text-on-surface-variant">Kembalian</span>
+<span class="tabular-nums text-on-surface" id="succ-change">Rp0</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full flex flex-col gap-2 mt-6">
+<button class="w-full py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-[14px] hover:bg-[#153e32] active:scale-[0.98] transition-all cursor-pointer" id="btn-new-order">
+            Transaksi Baru
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Logic -->
+<script>
+    // Master Catalogs Data
+    const SERVICES = [
+      { id: 's1', type: 'Layanan', name: 'Potong Rambut', price: 35000 },
+      { id: 's2', type: 'Layanan', name: 'Haircut + Wash', price: 50000 },
+      { id: 's3', type: 'Layanan', name: 'Hair Wash', price: 15000 },
+      { id: 's4', type: 'Layanan', name: 'Hair Styling', price: 25000 },
+      { id: 's5', type: 'Layanan', name: 'Haircut + Styling', price: 55000 },
+      { id: 's6', type: 'Layanan', name: 'Haircut + Wash + Styling', price: 65000 }
+    ];
+
+    const PRODUCTS = [
+      { id: 'p1', type: 'Produk', name: 'Pomade Classic', price: 65000, stock: 8 },
+      { id: 'p2', type: 'Produk', name: 'Hair Tonic', price: 45000, stock: 5 },
+      { id: 'p3', type: 'Produk', name: 'Clay Matte', price: 55000, stock: 12 },
+      { id: 'p4', type: 'Produk', name: 'Shampoo Premium', price: 75000, stock: 4 },
+      { id: 'p5', type: 'Produk', name: 'Hair Powder', price: 40000, stock: 6 },
+      { id: 'p6', type: 'Produk', name: 'Hair Serum', price: 60000, stock: 0 }
+    ];
+
+    // State
+    let activeCatalogTab = 'layanan';
+    let searchQuery = '';
+    let cart = [];
+    let isDiscountEnabled = false;
+    let discountMode = 'nominal'; // 'nominal' | 'percentage'
+    let discountValue = 0;
+    let selectedCapster = '';
+    let paymentMethod = 'cash'; // 'cash' | 'qris'
+
+    // Currency Formatter
+    const formatRp = (num) => {
+      return 'Rp' + Math.max(0, Math.floor(num)).toLocaleString('id-ID');
+    };
+
+    // DOM References
+    const sidebarNav = document.getElementById('sidebar-nav');
+    const mainWrapper = document.getElementById('main-content-wrapper');
+
+    const tabLayanan = document.getElementById('tab-layanan');
+    const tabProduk = document.getElementById('tab-produk');
+    const searchInput = document.getElementById('search-input');
+    const gridLayanan = document.getElementById('grid-layanan');
+    const gridProduk = document.getElementById('grid-produk');
+    const catalogEmptyState = document.getElementById('catalog-empty-state');
+
+    const cartContainer = document.getElementById('cart-items-container');
+    const cartEmptyView = document.getElementById('cart-empty-view');
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    const capsterSelect = document.getElementById('capster-select');
+    const capsterHint = document.getElementById('capster-hint');
+    const capsterValidationMsg = document.getElementById('capster-validation-msg');
+
+    // Discount Elements
+    const discountToggleCheckbox = document.getElementById('discount-toggle-checkbox');
+    const discountControlsContainer = document.getElementById('discount-controls-container');
+    const discNominalBtn = document.getElementById('discount-type-nominal');
+    const discPercentBtn = document.getElementById('discount-type-percent');
+    const discountInput = document.getElementById('discount-input');
+    const discountPrefix = document.getElementById('discount-prefix');
+    const discountSuffix = document.getElementById('discount-suffix');
+    const discountValidationHint = document.getElementById('discount-validation-hint');
+
+    const summarySubtotal = document.getElementById('summary-subtotal');
+    const summaryDiscount = document.getElementById('summary-discount');
+    const summaryTotal = document.getElementById('summary-total');
+    const btnCheckout = document.getElementById('btn-checkout');
+
+    // Payment Modal Elements
+    const paymentModal = document.getElementById('payment-modal');
+    const modalCloseX = document.getElementById('modal-close-x');
+    const btnCancelModal = document.getElementById('btn-cancel-modal');
+    const modalTotalDisplay = document.getElementById('modal-total-display');
+    const modalCapsterIndicator = document.getElementById('modal-capster-indicator');
+    const methodCashBtn = document.getElementById('method-cash-btn');
+    const methodQrisBtn = document.getElementById('method-qris-btn');
+    const cashSection = document.getElementById('cash-payment-section');
+    const qrisSection = document.getElementById('qris-payment-section');
+    const cashReceivedInput = document.getElementById('cash-received-input');
+    const cashValidationMsg = document.getElementById('cash-validation-msg');
+    const cashChangeDisplay = document.getElementById('cash-change-display');
+    const qrisCheckbox = document.getElementById('qris-received-check');
+    const btnConfirmTransaction = document.getElementById('btn-confirm-transaction');
+    const quickCashBtns = document.querySelectorAll('.quick-cash-btn');
+    const quickCashExact = document.getElementById('quick-cash-exact');
+
+    // Success Modal Elements
+    const successModal = document.getElementById('success-modal');
+    const succNo = document.getElementById('succ-no');
+    const succCapster = document.getElementById('succ-capster');
+    const succCapsterRow = document.getElementById('succ-capster-row');
+    const succMethod = document.getElementById('succ-method');
+    const succTotal = document.getElementById('succ-total');
+    const succReceived = document.getElementById('succ-received');
+    const succChange = document.getElementById('succ-change');
+    const succCashDetails = document.getElementById('succ-cash-details');
+    const btnNewOrder = document.getElementById('btn-new-order');
+
+    // Tab Catalog Switching
+    tabLayanan.addEventListener('click', () => {
+      activeCatalogTab = 'layanan';
+      tabLayanan.className = "pb-2.5 text-[15px] font-semibold text-primary border-b-2 border-primary transition-colors cursor-pointer";
+      tabProduk.className = "pb-2.5 text-[15px] font-medium text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer";
+      searchInput.placeholder = "Cari layanan...";
+      gridLayanan.classList.remove('hidden');
+      gridProduk.classList.add('hidden');
+      renderCatalog();
+    });
+
+    tabProduk.addEventListener('click', () => {
+      activeCatalogTab = 'produk';
+      tabProduk.className = "pb-2.5 text-[15px] font-semibold text-primary border-b-2 border-primary transition-colors cursor-pointer";
+      tabLayanan.className = "pb-2.5 text-[15px] font-medium text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer";
+      searchInput.placeholder = "Cari produk...";
+      gridProduk.classList.remove('hidden');
+      gridLayanan.classList.add('hidden');
+      renderCatalog();
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderCatalog();
+    });
+
+    // Render Catalog
+    function renderCatalog() {
+      if (activeCatalogTab === 'layanan') {
+        const filtered = SERVICES.filter(s => s.name.toLowerCase().includes(searchQuery));
+        if (filtered.length === 0) {
+          gridLayanan.innerHTML = '';
+          catalogEmptyState.classList.remove('hidden');
+        } else {
+          catalogEmptyState.classList.add('hidden');
+          gridLayanan.innerHTML = filtered.map(item => `
+            <div onclick="addToCart('${item.id}', 'Layanan')" class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex flex-col justify-between h-28 shadow-xs">
+              <span class="text-[15px] font-semibold text-on-surface leading-snug">${item.name}</span>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-[12px] text-on-surface-variant">Layanan</span>
+                <span class="text-[15px] text-primary tabular-nums font-semibold">${formatRp(item.price)}</span>
+              </div>
+            </div>
+          `).join('');
+        }
+      } else {
+        const filtered = PRODUCTS.filter(p => p.name.toLowerCase().includes(searchQuery));
+        if (filtered.length === 0) {
+          gridProduk.innerHTML = '';
+          catalogEmptyState.classList.remove('hidden');
+        } else {
+          catalogEmptyState.classList.add('hidden');
+          gridProduk.innerHTML = filtered.map(item => {
+            const isOutOfStock = item.stock <= 0;
+            const clickAction = isOutOfStock ? '' : `onclick="addToCart('${item.id}', 'Produk')"`;
+            const cardClasses = isOutOfStock 
+              ? 'p-3.5 rounded-xl bg-surface-container-high/40 border border-outline-variant/60 cursor-not-allowed opacity-60 flex gap-3.5 items-center' 
+              : 'p-3.5 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary cursor-pointer transition-all active:scale-[0.98] flex gap-3.5 items-center shadow-xs';
+            
+            const stockLabel = isOutOfStock 
+              ? `<span class="text-[12px] text-outline">Stok habis</span>`
+              : `<span class="text-[12px] text-on-surface-variant">Stok: ${item.stock}</span>`;
+
+            return `
+              <div ${clickAction} class="${cardClasses}">
+                <div class="w-16 h-16 rounded-lg bg-[#E8ECE9] border border-outline-variant/50 flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-outline text-[24px]">image</span>
+                </div>
+                <div class="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+                  <span class="text-[14px] font-semibold text-on-surface truncate leading-tight">${item.name}</span>
+                  <div class="mt-0.5">${stockLabel}</div>
+                  <span class="text-[14px] text-primary tabular-nums font-semibold mt-1">${formatRp(item.price)}</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    // Add to Cart Logic
+    window.addToCart = function(id, type) {
+      if (type === 'Layanan') {
+        const item = SERVICES.find(s => s.id === id);
+        if (!item) return;
+        const existing = cart.find(c => c.id === id);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ ...item, qty: 1 });
+        }
+      } else {
+        const item = PRODUCTS.find(p => p.id === id);
+        if (!item || item.stock <= 0) return;
+        const existing = cart.find(c => c.id === id);
+        if (existing) {
+          if (existing.qty < item.stock) {
+            existing.qty += 1;
+          }
+        } else {
+          cart.push({ ...item, qty: 1 });
+        }
+      }
+      renderCart();
+    };
+
+    // Update Quantity
+    window.updateQty = function(id, change) {
+      const item = cart.find(c => c.id === id);
+      if (!item) return;
+      
+      const newQty = item.qty + change;
+      if (item.type === 'Produk') {
+        if (change > 0 && newQty > item.stock) return;
+      }
+      if (newQty <= 0) {
+        removeFromCart(id);
+      } else {
+        item.qty = newQty;
+        renderCart();
+      }
+    };
+
+    // Remove from Cart
+    window.removeFromCart = function(id) {
+      cart = cart.filter(c => c.id !== id);
+      renderCart();
+    };
+
+    // Clear Cart
+    clearCartBtn.addEventListener('click', () => {
+      cart = [];
+      renderCart();
+    });
+
+    // Discount Toggle & Segmented Controls
+    discountToggleCheckbox.addEventListener('change', (e) => {
+      isDiscountEnabled = e.target.checked;
+      if (isDiscountEnabled) {
+        discountControlsContainer.classList.remove('hidden');
+        discountInput.value = discountValue > 0 ? discountValue : '';
+      } else {
+        discountControlsContainer.classList.add('hidden');
+        discountValue = 0;
+        discountInput.value = '';
+        discountValidationHint.classList.add('hidden');
+        discountValidationHint.textContent = '';
+      }
+      updateCalculations();
+    });
+
+    discNominalBtn.addEventListener('click', () => {
+      discountMode = 'nominal';
+      discNominalBtn.className = "px-2.5 py-0.5 rounded-md bg-surface-container text-primary font-semibold shadow-xs transition-colors cursor-pointer";
+      discPercentBtn.className = "px-2.5 py-0.5 rounded-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer";
+      discountPrefix.classList.remove('hidden');
+      discountSuffix.classList.add('hidden');
+      discountInput.classList.remove('pr-8');
+      discountInput.classList.add('pl-9');
+      validateAndApplyDiscountInput();
+    });
+
+    discPercentBtn.addEventListener('click', () => {
+      discountMode = 'percentage';
+      discPercentBtn.className = "px-2.5 py-0.5 rounded-md bg-surface-container text-primary font-semibold shadow-xs transition-colors cursor-pointer";
+      discNominalBtn.className = "px-2.5 py-0.5 rounded-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer";
+      discountPrefix.classList.add('hidden');
+      discountSuffix.classList.remove('hidden');
+      discountInput.classList.remove('pl-9');
+      discountInput.classList.add('pr-8');
+      validateAndApplyDiscountInput();
+    });
+
+    function validateAndApplyDiscountInput() {
+      if (!isDiscountEnabled) {
+        discountValue = 0;
+        discountValidationHint.classList.add('hidden');
+        discountValidationHint.textContent = '';
+        updateCalculations();
+        return;
+      }
+
+      const rawVal = parseFloat(discountInput.value) || 0;
+      const subtotal = cart.reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
+
+      if (rawVal < 0) {
+        discountValue = 0;
+        discountInput.value = 0;
+        discountValidationHint.textContent = "Diskon tidak boleh negatif";
+        discountValidationHint.classList.remove('hidden');
+      } else if (discountMode === 'nominal') {
+        if (rawVal > subtotal && subtotal > 0) {
+          discountValue = subtotal;
+          discountValidationHint.textContent = "Diskon nominal dibatasi maksimal senilai subtotal";
+          discountValidationHint.classList.remove('hidden');
+        } else {
+          discountValue = rawVal;
+          discountValidationHint.classList.add('hidden');
+          discountValidationHint.textContent = '';
+        }
+      } else if (discountMode === 'percentage') {
+        if (rawVal > 100) {
+          discountValue = 100;
+          discountInput.value = 100;
+          discountValidationHint.textContent = "Diskon persentase maksimal 100%";
+          discountValidationHint.classList.remove('hidden');
+        } else {
+          discountValue = rawVal;
+          discountValidationHint.classList.add('hidden');
+          discountValidationHint.textContent = '';
+        }
+      }
+
+      updateCalculations();
+    }
+
+    discountInput.addEventListener('input', validateAndApplyDiscountInput);
+
+    capsterSelect.addEventListener('change', (e) => {
+      selectedCapster = e.target.value;
+      if (selectedCapster) {
+        capsterSelect.classList.remove('border-error');
+        capsterValidationMsg.classList.add('hidden');
+      }
+      validateCheckout();
+    });
+
+    // Render Cart Function
+    function renderCart() {
+      const isCartEmpty = cart.length === 0;
+
+      if (isCartEmpty) {
+        cartContainer.classList.add('hidden');
+        cartEmptyView.classList.remove('hidden');
+        clearCartBtn.classList.add('hidden');
+
+        // Disable discount checkbox when cart is empty
+        discountToggleCheckbox.checked = false;
+        discountToggleCheckbox.disabled = true;
+        isDiscountEnabled = false;
+        discountValue = 0;
+        discountControlsContainer.classList.add('hidden');
+        discountValidationHint.classList.add('hidden');
+      } else {
+        cartContainer.classList.remove('hidden');
+        cartEmptyView.classList.add('hidden');
+        clearCartBtn.classList.remove('hidden');
+
+        discountToggleCheckbox.disabled = false;
+
+        cartContainer.innerHTML = cart.map(item => {
+          const isProduct = item.type === 'Produk';
+          const maxReached = isProduct && item.qty >= item.stock;
+          const minReached = item.qty <= 1;
+
+          return `
+            <div class="py-3 flex items-center justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="text-[14px] font-semibold text-on-surface truncate">${item.name}</span>
+                </div>
+                <div class="flex items-center gap-2 mt-0.5">
+                  <span class="text-[12px] text-on-surface-variant">${item.type}</span>
+                  <span class="text-[12px] text-outline-variant">·</span>
+                  <span class="text-[12px] text-on-surface-variant tabular-nums">${formatRp(item.price)}</span>
+                </div>
+              </div>
+
+              <!-- Quantity Stepper -->
+              <div class="flex items-center gap-1 bg-surface-container-low rounded-lg p-0.5 border border-outline-variant">
+                <button 
+                  onclick="updateQty('${item.id}', -1)" 
+                  class="w-6 h-6 flex items-center justify-center rounded text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer ${minReached ? 'opacity-40 pointer-events-none' : ''}"
+                >
+                  <span class="material-symbols-outlined text-[15px]">remove</span>
+                </button>
+                <span class="w-6 text-center text-[13px] font-semibold tabular-nums text-on-surface">${item.qty}</span>
+                <button 
+                  onclick="updateQty('${item.id}', 1)" 
+                  class="w-6 h-6 flex items-center justify-center rounded text-on-surface hover:bg-surface-container active:scale-[0.98] cursor-pointer ${maxReached ? 'opacity-40 pointer-events-none' : ''}"
+                >
+                  <span class="material-symbols-outlined text-[15px]">add</span>
+                </button>
+              </div>
+
+              <!-- Subtotal & Delete -->
+              <div class="flex items-center gap-3">
+                <span class="text-[14px] text-on-surface tabular-nums font-semibold w-24 text-right">
+                  ${formatRp(item.price * item.qty)}
+                </span>
+                <button 
+                  onclick="removeFromCart('${item.id}')" 
+                  class="text-outline hover:text-error transition-colors p-1 rounded-lg cursor-pointer"
+                  title="Hapus"
+                >
+                  <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      if (isDiscountEnabled) {
+        validateAndApplyDiscountInput();
+      } else {
+        updateCalculations();
+      }
+    }
+
+    // Calculations
+    function getTotals() {
+      const subtotal = cart.reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
+      let calculatedDiscount = 0;
+
+      if (isDiscountEnabled && subtotal > 0) {
+        if (discountMode === 'nominal') {
+          calculatedDiscount = Math.min(subtotal, Math.max(0, discountValue));
+        } else {
+          const pct = Math.min(100, Math.max(0, discountValue));
+          calculatedDiscount = Math.round((subtotal * pct) / 100);
+        }
+      }
+
+      const total = Math.max(0, subtotal - calculatedDiscount);
+      return { subtotal, discount: calculatedDiscount, total };
+    }
+
+    function updateCalculations() {
+      const { subtotal, discount, total } = getTotals();
+      summarySubtotal.textContent = formatRp(subtotal);
+      summaryDiscount.textContent = discount > 0 ? '-' + formatRp(discount) : 'Rp0';
+      summaryTotal.textContent = formatRp(total);
+
+      validateCheckout();
+    }
+
+    function validateCheckout() {
+      const hasServices = cart.some(c => c.type === 'Layanan');
+      
+      if (hasServices) {
+        capsterHint.textContent = "Wajib jika ada layanan";
+        capsterHint.className = "text-[12px] font-medium text-secondary";
+      } else {
+        capsterHint.textContent = "Opsional untuk produk";
+        capsterHint.className = "text-[12px] text-on-surface-variant";
+        capsterSelect.classList.remove('border-error');
+        capsterValidationMsg.classList.add('hidden');
+      }
+
+      const isCartEmpty = cart.length === 0;
+
+      if (isCartEmpty) {
+        btnCheckout.disabled = true;
+        btnCheckout.classList.add('cursor-not-allowed');
+      } else {
+        btnCheckout.disabled = false;
+        btnCheckout.classList.remove('cursor-not-allowed');
+      }
+    }
+
+    // Checkout Modal Flow
+    btnCheckout.addEventListener('click', () => {
+      if (cart.length === 0) return;
+
+      const hasServices = cart.some(c => c.type === 'Layanan');
+      if (hasServices && !selectedCapster) {
+        capsterSelect.classList.add('border-error');
+        capsterSelect.focus();
+        capsterValidationMsg.classList.remove('hidden');
+        return;
+      }
+
+      const { total } = getTotals();
+      modalTotalDisplay.textContent = formatRp(total);
+      modalCapsterIndicator.textContent = selectedCapster ? `Capster: ${selectedCapster}` : 'Capster: - (Produk Saja)';
+      
+      paymentMethod = 'cash';
+      setPaymentMethodUI('cash');
+      
+      // Default cash input to exact amount
+      cashReceivedInput.value = total;
+      calculateCashChange();
+
+      btnConfirmTransaction.disabled = false;
+      btnConfirmTransaction.textContent = 'Konfirmasi Transaksi';
+
+      paymentModal.classList.remove('hidden');
+    });
+
+    modalCloseX.addEventListener('click', () => paymentModal.classList.add('hidden'));
+    btnCancelModal.addEventListener('click', () => paymentModal.classList.add('hidden'));
+
+    // Payment Method Switching inside Modal
+    methodCashBtn.addEventListener('click', () => {
+      setPaymentMethodUI('cash');
+    });
+
+    methodQrisBtn.addEventListener('click', () => {
+      setPaymentMethodUI('qris');
+    });
+
+    function setPaymentMethodUI(method) {
+      paymentMethod = method;
+      if (method === 'cash') {
+        methodCashBtn.className = "flex flex-col p-3 rounded-xl border-2 border-primary bg-surface-container-low text-left transition-all cursor-pointer";
+        methodCashBtn.querySelector('span:first-child').className = "text-[15px] font-semibold text-primary";
+        methodQrisBtn.className = "flex flex-col p-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-left hover:bg-surface-container transition-all cursor-pointer";
+        methodQrisBtn.querySelector('span:first-child').className = "text-[15px] font-semibold text-on-surface";
+        
+        cashSection.classList.remove('hidden');
+        qrisSection.classList.add('hidden');
+        calculateCashChange();
+      } else {
+        methodQrisBtn.className = "flex flex-col p-3 rounded-xl border-2 border-primary bg-surface-container-low text-left transition-all cursor-pointer";
+        methodQrisBtn.querySelector('span:first-child').className = "text-[15px] font-semibold text-primary";
+        methodCashBtn.className = "flex flex-col p-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-left hover:bg-surface-container transition-all cursor-pointer";
+        methodCashBtn.querySelector('span:first-child').className = "text-[15px] font-semibold text-on-surface";
+
+        qrisSection.classList.remove('hidden');
+        cashSection.classList.add('hidden');
+        validateQrisPayment();
+      }
+    }
+
+    // Cash Handlers
+    function calculateCashChange() {
+      const { total } = getTotals();
+      const received = parseFloat(cashReceivedInput.value) || 0;
+      const change = received - total;
+
+      if (change < 0) {
+        cashValidationMsg.classList.remove('hidden');
+        cashChangeDisplay.textContent = 'Rp0';
+        btnConfirmTransaction.disabled = true;
+      } else {
+        cashValidationMsg.classList.add('hidden');
+        cashChangeDisplay.textContent = formatRp(change);
+        btnConfirmTransaction.disabled = false;
+      }
+    }
+
+    cashReceivedInput.addEventListener('input', calculateCashChange);
+
+    quickCashBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        cashReceivedInput.value = btn.getAttribute('data-val');
+        calculateCashChange();
+      });
+    });
+
+    quickCashExact.addEventListener('click', () => {
+      const { total } = getTotals();
+      cashReceivedInput.value = total;
+      calculateCashChange();
+    });
+
+    // QRIS Validation Handlers
+    qrisCheckbox.addEventListener('change', validateQrisPayment);
+
+    function validateQrisPayment() {
+      if (paymentMethod === 'qris') {
+        btnConfirmTransaction.disabled = !qrisCheckbox.checked;
+      }
+    }
+
+    // Finalize Transaction Confirmation
+    btnConfirmTransaction.addEventListener('click', () => {
+      const { total } = getTotals();
+      
+      // Prevent duplicate submission
+      btnConfirmTransaction.disabled = true;
+      btnConfirmTransaction.textContent = 'Memproses...';
+
+      const orderNumber = 'BH-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(100 + Math.random() * 900);
+      
+      succNo.textContent = orderNumber;
+      if (selectedCapster) {
+        succCapster.textContent = selectedCapster;
+        succCapsterRow.classList.remove('hidden');
+      } else {
+        succCapsterRow.classList.add('hidden');
+      }
+      
+      succMethod.textContent = paymentMethod === 'cash' ? 'Tunai' : 'QRIS';
+      succTotal.textContent = formatRp(total);
+
+      if (paymentMethod === 'cash') {
+        succCashDetails.classList.remove('hidden');
+        const received = parseFloat(cashReceivedInput.value) || total;
+        succReceived.textContent = formatRp(received);
+        succChange.textContent = formatRp(received - total);
+      } else {
+        succCashDetails.classList.add('hidden');
+      }
+
+      // Close payment modal & open success modal
+      setTimeout(() => {
+        paymentModal.classList.add('hidden');
+        successModal.classList.remove('hidden');
+        btnConfirmTransaction.textContent = 'Konfirmasi Transaksi';
+      }, 300);
+    });
+
+    // Success Actions: Reset transaction completely
+    function resetPOS() {
+      cart = [];
+      selectedCapster = '';
+      capsterSelect.value = '';
+      capsterSelect.classList.remove('border-error');
+      capsterValidationMsg.classList.add('hidden');
+      
+      qrisCheckbox.checked = false;
+      discountToggleCheckbox.checked = false;
+      isDiscountEnabled = false;
+      discountValue = 0;
+      discountInput.value = '0';
+      discountControlsContainer.classList.add('hidden');
+      discountValidationHint.classList.add('hidden');
+      
+      searchQuery = '';
+      searchInput.value = '';
+      
+      renderCatalog();
+      renderCart();
+      successModal.classList.add('hidden');
+      paymentModal.classList.add('hidden');
+    }
+
+    btnNewOrder.addEventListener('click', resetPOS);
+
+    // Initial Execution
+    renderCatalog();
+    renderCart();
+
+    // Accordion interaction for navigation
+    const accordionButtons = document.querySelectorAll('.accordion-btn');
+    accordionButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const contentId = btn.getAttribute('aria-controls');
+        const content = document.getElementById(contentId);
+        const chevron = btn.querySelector('.chevron-icon');
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          btn.setAttribute('aria-expanded', 'false');
+          content.classList.remove('max-h-48', 'opacity-100');
+          content.classList.add('max-h-0', 'opacity-0', 'hidden');
+          chevron.classList.remove('rotate-180');
+          chevron.classList.add('rotate-0');
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          content.classList.remove('max-h-0', 'opacity-0', 'hidden');
+          content.classList.add('max-h-48', 'opacity-100');
+          chevron.classList.remove('rotate-0');
+          chevron.classList.add('rotate-180');
+        }
+      });
+    });
+  </script>
+
+
+</body></html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BarberHub POS - Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container": "#eaefed",
+            "surface": "#f6faf8",
+            "on-secondary-fixed-variant": "#05513a",
+            "on-error": "#ffffff",
+            "primary": "#003629",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#baeed9",
+            "background": "#f6faf8",
+            "on-secondary": "#ffffff",
+            "surface-dim": "#d6dbd9",
+            "on-background": "#181d1c",
+            "error-container": "#ffdad6",
+            "inverse-primary": "#9ed1bd",
+            "tertiary-fixed-dim": "#adcec0",
+            "on-surface-variant": "#404945",
+            "tertiary-fixed": "#c9eadc",
+            "on-primary": "#ffffff",
+            "secondary-fixed-dim": "#92d4b6",
+            "on-secondary-fixed": "#002115",
+            "surface-variant": "#dfe3e1",
+            "secondary-fixed": "#aef1d1",
+            "on-secondary-container": "#2f7057",
+            "on-surface": "#181d1c",
+            "secondary-container": "#aef1d1",
+            "on-primary-fixed-variant": "#1d4f40",
+            "on-tertiary-container": "#99b9ac",
+            "on-tertiary-fixed-variant": "#2f4c42",
+            "surface-bright": "#f6faf8",
+            "error": "#ba1a1a",
+            "surface-container-high": "#e5e9e7",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c0c9c3",
+            "on-primary-container": "#8abda9",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#dfe3e1",
+            "outline": "#707974",
+            "surface-container-low": "#f0f5f2",
+            "tertiary": "#16332a",
+            "primary-container": "#1b4d3e",
+            "tertiary-container": "#2d4a40",
+            "on-tertiary-fixed": "#022018",
+            "secondary": "#286a51",
+            "on-primary-fixed": "#002117",
+            "surface-tint": "#376757",
+            "inverse-surface": "#2c3130",
+            "primary-fixed-dim": "#9ed1bd",
+            "inverse-on-surface": "#edf2f0"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-lg": "1.5rem",
+            "space-xs": "0.5rem",
+            "margin-lg": "2rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xxs": "0.25rem",
+            "gutter": "1rem",
+            "space-xl": "2rem",
+            "space-sm": "0.75rem",
+            "margin-md": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-2xl": "3rem"
+          },
+          "fontFamily": {
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "numeric-currency": ["Inter"],
+            "title-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-md": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-lg": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "label-sm": ["10px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "numeric-currency": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "title-md": ["16px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "500"}],
+            "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+            "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+            "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "label-lg": ["14px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "display-lg-mobile": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .custom-shadow-card {
+      box-shadow: 0px 2px 8px -2px rgba(30, 35, 34, 0.04), 0px 1px 3px 0px rgba(30, 35, 34, 0.02);
+    }
+    .custom-shadow-modal {
+      box-shadow: 0px 16px 40px -8px rgba(15, 45, 36, 0.12), 0px 8px 16px -4px rgba(30, 35, 34, 0.06);
+    }
+  </style>
+<style id="brand-palette-style">
+  body { background-color: #F5F5F5 !important; color: #1A1A1A !important; }
+  .bg-primary, [class*="bg-primary"], .bg-\[\#1b4d3e\], .bg-\[\#1B4D3E\] { background-color: #FF7A00 !important; color: #FFFFFF !important; }
+  .text-primary, [class*="text-primary"], .text-\[\#1b4d3e\] { color: #FF7A00 !important; }
+  .border-primary, [class*="border-primary"] { border-color: #FF7A00 !important; }
+  aside .bg-primary, aside .bg-primary-container { background-color: #1A1A1A !important; color: #FFFFFF !important; }
+  aside nav a.bg-surface-container-low, aside nav a.bg-surface-container { background-color: #FFF0E0 !important; color: #FF7A00 !important; }
+  aside nav a.bg-surface-container-low span, aside nav a.bg-surface-container span { color: #FF7A00 !important; }
+  .bg-surface-container-lowest { background-color: #FFFFFF !important; }
+  .text-on-surface { color: #1A1A1A !important; }
+  .text-on-surface-variant { color: #737373 !important; }
+</style><link rel="stylesheet" href="assets/motion.css"/>
+<script src="assets/shell.js"></script>
+<script src="assets/motion.js"></script>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex selection:bg-secondary-fixed selection:text-primary">
+<!-- Fixed Left Sidebar -->
+<aside class="fixed top-0 left-0 h-screen w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col justify-between z-30 shrink-0 whitespace-nowrap">
+<div class="flex flex-col">
+<!-- Brand Header -->
+<div class="px-6 pt-5 pb-5 border-b border-outline-variant/40">
+  <div class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-xl bg-primary-container text-white flex items-center justify-center font-headline-sm text-headline-sm font-semibold" style="background-color: #FF7A00 !important; color: #FFFFFF !important;">
+      B
+    </div>
+    <h1 class="text-headline-sm font-headline-sm text-on-surface font-semibold tracking-tight">BarberHub POS</h1>
+  </div>
+</div>
+<!-- Navigation Links with Collapsible Accordions -->
+<nav class="px-4 py-5 space-y-1.5">
+  <!-- 1. Dashboard (Active) -->
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg font-label-lg text-label-lg transition-colors duration-150 font-medium" href="dashboard.html" style="background-color: #FFF0E0; color: #FF7A00;">
+    <span class="material-symbols-outlined text-[20px]" style="color: #FF7A00;">dashboard</span>
+    <span>Dashboard</span>
+  </a>
+  <!-- 2. Transaksi -->
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] font-label-lg text-label-lg transition-colors duration-150" href="cashier.html">
+    <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+    <span>Transaksi</span>
+  </a>
+  <!-- 3. Manajemen -->
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] font-label-lg text-label-lg transition-colors duration-150" href="management.html">
+    <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+    <span>Manajemen</span>
+  </a>
+  <!-- 4. Riwayat -->
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] font-label-lg text-label-lg transition-colors duration-150" href="history.html">
+    <span class="material-symbols-outlined text-[20px]">history</span>
+    <span>Riwayat</span>
+  </a>
+</nav>
+</div>
+<!-- Footer Navigation -->
+<div class="p-4 border-t border-outline-variant/40 space-y-1">
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-gray-100 hover:text-[#1A1A1A] font-label-lg text-label-lg transition-colors duration-150" href="settings.html">
+    <span class="material-symbols-outlined text-[20px]">settings</span>
+    <span>Pengaturan</span>
+  </a>
+  <a href="login.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#737373] hover:bg-red-50 hover:text-red-600 font-label-lg text-label-lg transition-colors duration-150">
+    <span class="material-symbols-outlined text-[20px]">logout</span>
+    <span>Keluar</span>
+  </a>
+</div>
+</aside>
+<!-- Main View Container -->
+<div class="pl-64 flex-1 flex flex-col min-h-screen">
+<!-- Top Header -->
+<header class="h-16 bg-surface-container-lowest border-b border-outline-variant/60 px-8 flex items-center sticky top-0 z-20">
+  <nav class="flex items-center gap-2 text-[14px]">
+    <span class="text-[#737373] font-normal">BarberHub POS</span>
+    <span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span>
+    <span class="text-[#1A1A1A] font-medium">Dashboard</span>
+  </nav>
+</header>
+<!-- Main Content Canvas (Max 1440px) -->
+<main class="p-8 max-w-[1440px] w-full mx-auto space-y-8 flex-1">
+  <!-- A. Ringkasan Harian (4 Kartu Sejajar) -->
+  <section>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5"><!-- Kartu 1 -->
+<div class="relative overflow-hidden bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-5 custom-shadow-card flex flex-col justify-between h-[132px] transition-all">
+  <div class="flex items-center justify-between">
+    <span class="text-label-md font-label-md text-on-surface-variant font-medium">Omzet Hari Ini</span>
+    <span class="material-symbols-outlined text-[32px] text-primary/20 pointer-events-none select-none" data-icon="payments">payments</span>
+  </div>
+  <div class="text-headline-lg font-headline-lg text-primary-container tracking-tight tabular-nums">
+    Rp2.450.000
+  </div>
+  <div class="text-body-sm font-body-sm text-outline">Total penjualan hari ini</div>
+</div>
+<!-- Kartu 2 -->
+<div class="relative overflow-hidden bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-5 custom-shadow-card flex flex-col justify-between h-[132px] transition-all">
+  <div class="flex items-center justify-between">
+    <span class="text-label-md font-label-md text-on-surface-variant font-medium">Transaksi Layanan</span>
+    <span class="material-symbols-outlined text-[32px] text-primary/20 pointer-events-none select-none" data-icon="content_cut">content_cut</span>
+  </div>
+  <div class="text-headline-lg font-headline-lg text-on-surface tracking-tight tabular-nums">
+    28
+  </div>
+  <div class="text-body-sm font-body-sm text-outline">Transaksi dengan layanan</div>
+</div>
+<!-- Kartu 3 -->
+<div class="relative overflow-hidden bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-5 custom-shadow-card flex flex-col justify-between h-[132px] transition-all">
+  <div class="flex items-center justify-between">
+    <span class="text-label-md font-label-md text-on-surface-variant font-medium">Penjualan Produk</span>
+    <span class="material-symbols-outlined text-[32px] text-primary/20 pointer-events-none select-none" data-icon="inventory_2">inventory_2</span>
+  </div>
+  <div class="text-headline-lg font-headline-lg text-on-surface tracking-tight tabular-nums">
+    Rp680.000
+  </div>
+  <div class="text-body-sm font-body-sm text-outline">Penjualan produk hari ini</div>
+</div>
+<!-- Kartu 4 -->
+<div class="relative overflow-hidden bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-5 custom-shadow-card flex flex-col justify-between h-[132px] transition-all">
+  <div class="flex items-center justify-between">
+    <span class="text-label-md font-label-md text-on-surface-variant font-medium">Total Transaksi</span>
+    <span class="material-symbols-outlined text-[32px] text-primary/20 pointer-events-none select-none" data-icon="receipt_long">receipt_long</span>
+  </div>
+  <div class="text-headline-lg font-headline-lg text-on-surface tracking-tight tabular-nums">
+    35
+  </div>
+  <div class="text-body-sm font-body-sm text-outline">Transaksi berhasil hari ini</div>
+</div></div>
+  </section>
+
+  <!-- Grid 2 Kolom untuk Stok Menipis & Transaksi Terbaru -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+    <!-- B. Bagian Stok Menipis (5 Kolom pada 12-col grid) -->
+    <section class="xl:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-card p-6 flex flex-col"><div class="flex items-center justify-between pb-4 border-b border-outline-variant/60">
+  <h3 class="text-headline-sm font-headline-sm text-on-surface tracking-tight">Stok Menipis</h3>
+  <a class="text-label-md font-label-md text-primary-container hover:text-secondary font-medium transition-colors hover:underline" href="#">
+    Lihat Semua Produk
+  </a>
+</div>
+<div class="overflow-x-auto mt-2">
+  <table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-outline-variant/40 text-label-sm font-label-sm text-outline">
+        <th class="py-3 px-2 font-medium">Produk</th>
+        <th class="py-3 px-3 font-medium text-center">Stok</th>
+        <th class="py-3 px-2 font-medium text-right">Batas Minimum</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-outline-variant/30 text-body-md font-body-md">
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Pomade Classic</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">3</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">5</td>
+      </tr>
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Hair Tonic</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">2</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">5</td>
+      </tr>
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Clay Matte</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">4</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">6</td>
+      </tr>
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Shampoo Premium</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">1</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">4</td>
+      </tr>
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Hair Powder</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">2</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">5</td>
+      </tr>
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Beard Oil Sandalwood</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">2</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">6</td>
+      </tr>
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Shaving Cream Classic</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">3</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">8</td>
+      </tr>
+      <tr class="hover:bg-surface-container-low transition-colors duration-150">
+        <td class="py-3 px-2 font-medium text-on-surface">Styling Comb Carbon</td>
+        <td class="py-3 px-3 text-center tabular-nums"><span class="inline-flex items-center justify-center min-w-[24px] px-2 py-0.5 rounded-full bg-error-container/30 text-error font-semibold text-label-sm">2</span></td>
+        <td class="py-3 px-2 text-right tabular-nums text-on-surface-variant">5</td>
+      </tr>
+    </tbody>
+  </table>
+</div></section>
+
+    <!-- C. Bagian Transaksi Terbaru (7 Kolom pada 12-col grid) -->
+    <section class="xl:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-card p-6 flex flex-col">
+      <div class="flex items-center justify-between pb-4 border-b border-outline-variant/60"><h3 class="text-headline-sm font-headline-sm text-on-surface tracking-tight">Transaksi Terbaru</h3>
+<a class="text-label-md font-label-md text-primary-container hover:text-secondary font-medium transition-colors hover:underline" href="#">
+  Lihat Semua Transaksi
+</a></div>
+      <div class="overflow-x-auto mt-2">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-outline-variant/40 text-label-sm font-label-sm text-outline">
+              <th class="py-3 px-2 font-medium">Waktu</th>
+              <th class="py-3 px-3 font-medium">Nomor Transaksi</th>
+              <th class="py-3 px-3 font-medium">Jenis</th>
+              <th class="py-3 px-2 font-medium text-right">Total</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/30 text-body-md font-body-md" id="transactionTableBody">
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Gentlemen Cut (Rp85.000) - Capster: Dimas" data-id="BH-20261028-001" data-time="10.42" data-total="Rp85.000" data-type="Layanan">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">10.42</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-001</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Layanan</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp85.000</td>
+            </tr>
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Gentlemen Cut (Rp85.000), Pomade Waterbased (Rp40.000) - Capster: Hendra" data-id="BH-20261028-002" data-time="10.35" data-total="Rp125.000" data-type="Campuran">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">10.35</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-002</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Campuran</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp125.000</td>
+            </tr>
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Matte Clay Texture (Rp45.000) - Kasir: Andi" data-id="BH-20261028-003" data-time="10.21" data-total="Rp45.000" data-type="Produk">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">10.21</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-003</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Produk</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp45.000</td>
+            </tr>
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Hot Towel Shave (Rp70.000) - Capster: Rama" data-id="BH-20261028-004" data-time="10.08" data-total="Rp70.000" data-type="Layanan">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">10.08</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-004</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Layanan</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp70.000</td>
+            </tr>
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Signature Package (Rp100.000), Hair Tonic (Rp50.000) - Capster: Dimas" data-id="BH-20261028-005" data-time="09.54" data-total="Rp150.000" data-type="Campuran">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">09.54</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-005</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Campuran</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp150.000</td>
+            </tr>
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Gentlemen Cut (Rp65.000) - Capster: Hendra" data-id="BH-20261028-006" data-time="09.41" data-total="Rp65.000" data-type="Layanan">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">09.41</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-006</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Layanan</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp65.000</td>
+            </tr>
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Beard Grooming (Rp60.000), Pomade (Rp50.000) - Capster: Rama" data-id="BH-20261028-007" data-time="09.25" data-total="Rp110.000" data-type="Campuran">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">09.25</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-007</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Campuran</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp110.000</td>
+            </tr>
+            <tr class="cursor-pointer hover:bg-surface-container-low transition-colors duration-150" data-details="Hair Tonic Botanical (Rp50.000) - Kasir: Andi" data-id="BH-20261028-008" data-time="09.10" data-total="Rp50.000" data-type="Produk">
+              <td class="py-3 px-2 tabular-nums text-on-surface-variant">09.10</td>
+              <td class="py-3 px-3 text-on-surface-variant font-medium">BH-20261028-008</td>
+              <td class="py-3 px-3 text-on-surface font-normal">Produk</td>
+              <td class="py-3 px-2 text-right tabular-nums font-medium text-on-surface">Rp50.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+</div>
+<!-- Interactive Detail Transaksi Modal -->
+<div class="fixed inset-0 bg-primary/30 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="txModal">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow-modal w-full max-w-md p-6 overflow-hidden transform transition-all">
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/60">
+<div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface tracking-tight" id="modalTxId">Detail Transaksi</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant" id="modalTxTime">Waktu Transaksi</p>
+</div>
+<button class="text-outline hover:text-on-surface p-1.5 rounded-lg hover:bg-surface-container-low transition-colors" id="closeModalBtn">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+<div class="py-5 space-y-4">
+<div class="flex justify-between items-center text-body-md font-body-md">
+<span class="text-outline">Kategori</span>
+<span class="font-medium text-on-surface" id="modalTxType">Layanan</span>
+</div>
+<div class="flex justify-between items-start text-body-md font-body-md">
+<span class="text-outline">Rincian Item</span>
+<span class="font-medium text-on-surface text-right max-w-[220px]" id="modalTxDetails">Rincian</span>
+</div>
+<div class="flex justify-between items-center text-body-md font-body-md">
+<span class="text-outline">Metode Pembayaran</span>
+<span class="font-medium text-on-surface">QRIS Kasir</span>
+</div>
+<div class="flex justify-between items-center text-body-md font-body-md">
+<span class="text-outline">Status Bayar</span>
+<span class="font-medium text-secondary">Lunas</span>
+</div>
+<div class="pt-4 border-t border-outline-variant/60 flex justify-between items-center">
+<span class="text-title-md font-title-md text-on-surface">Total Pembayaran</span>
+<span class="text-headline-sm font-headline-sm text-primary-container tabular-nums" id="modalTxTotal">Rp0</span>
+</div>
+</div>
+<div class="pt-2 flex gap-3">
+<button class="flex-1 py-2.5 px-4 rounded-xl border border-outline-variant hover:border-outline text-on-surface font-label-lg text-label-lg transition-colors" id="closeModalBtnSec">
+          Tutup
+        </button>
+<button class="flex-1 py-2.5 px-4 rounded-xl bg-primary-container hover:bg-secondary text-white font-label-lg text-label-lg transition-colors flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]" data-icon="print">print</span>
+<span class="">Cetak Struk</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    // Collapsible Accordion Navigation Logic
+    const accordionButtons = document.querySelectorAll('.accordion-btn');
+
+    accordionButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const contentId = btn.getAttribute('aria-controls');
+        const content = document.getElementById(contentId);
+        const chevron = btn.querySelector('.chevron-icon');
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          btn.setAttribute('aria-expanded', 'false');
+          content.classList.remove('max-h-48', 'opacity-100');
+          content.classList.add('max-h-0', 'opacity-0');
+          chevron.classList.remove('rotate-180');
+          chevron.classList.add('rotate-0');
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          content.classList.remove('max-h-0', 'opacity-0');
+          content.classList.add('max-h-48', 'opacity-100');
+          chevron.classList.remove('rotate-0');
+          chevron.classList.add('rotate-180');
+        }
+      });
+    });
+
+    // Profile dropdown removed — element no longer exists in this layout
+
+    // Transaction Modal Interactivity
+    const txRows = document.querySelectorAll('#transactionTableBody tr');
+    const txModal = document.getElementById('txModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const closeModalBtnSec = document.getElementById('closeModalBtnSec');
+
+    const modalTxId = document.getElementById('modalTxId');
+    const modalTxTime = document.getElementById('modalTxTime');
+    const modalTxType = document.getElementById('modalTxType');
+    const modalTxDetails = document.getElementById('modalTxDetails');
+    const modalTxTotal = document.getElementById('modalTxTotal');
+
+    txRows.forEach(row => {
+      row.addEventListener('click', () => {
+        const id = row.getAttribute('data-id');
+        const time = row.getAttribute('data-time');
+        const type = row.getAttribute('data-type');
+        const total = row.getAttribute('data-total');
+        const details = row.getAttribute('data-details');
+
+        modalTxId.textContent = 'Transaksi ' + id;
+        modalTxTime.textContent = 'Pukul ' + time + ' WIB';
+        modalTxType.textContent = type;
+        modalTxDetails.textContent = details;
+        modalTxTotal.textContent = total;
+
+        txModal.classList.remove('hidden');
+      });
+    });
+
+    function hideTxModal() {
+      txModal.classList.add('hidden');
+    }
+
+    closeModalBtn.addEventListener('click', hideTxModal);
+    closeModalBtnSec.addEventListener('click', hideTxModal);
+
+    txModal.addEventListener('click', (e) => {
+      if (e.target === txModal) {
+        hideTxModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        hideTxModal();
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+</body></html>

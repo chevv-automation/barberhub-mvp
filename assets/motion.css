@@ -1,0 +1,139 @@
+/* ==========================================================
+   BarberHub POS — Motion Layer
+   Animation-only. Touches opacity / transform / color only.
+   ========================================================== */
+:root {
+  --bh-ease: cubic-bezier(0.22, 0.61, 0.36, 1);   /* ease-out */
+  --bh-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --bh-dur-micro: 150ms;
+  --bh-dur-page: 220ms;
+  --bh-dur-modal: 200ms;
+  --bh-orange: #FF7A00;
+}
+
+/* ---------- 2. Page transitions ----------
+   Disabled. Navigation between app pages is handled by assets/shell.js,
+   which keeps the sidebar/topbar mounted and swaps content instantly. */
+
+/* Suppress transitions during first paint so styles injected after load
+   (Tailwind CDN) don't visibly animate the shell. Removed by motion.js. */
+html.bh-preload *, html.bh-preload *::before, html.bh-preload *::after { transition: none !important; }
+
+@keyframes bh-fade-out { to { opacity: 0; } }
+@keyframes bh-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- 3. Sidebar ---------- */
+aside a, aside button {
+  transition: background-color var(--bh-dur-micro) var(--bh-ease),
+              color var(--bh-dur-micro) var(--bh-ease),
+              box-shadow var(--bh-dur-micro) var(--bh-ease) !important;
+}
+aside nav a { position: relative; }
+aside nav a .material-symbols-outlined {
+  transition: transform var(--bh-dur-micro) var(--bh-ease), color var(--bh-dur-micro) var(--bh-ease);
+}
+aside nav a:hover .material-symbols-outlined { transform: translateX(2px); }
+aside nav a[aria-current="page"] .material-symbols-outlined { color: var(--bh-orange); }
+/* Active indicator: thin orange bar that grows in (inside the item, no layout change) */
+aside nav a::before {
+  content: "";
+  position: absolute; left: 0; top: 22%; bottom: 22%;
+  width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--bh-orange);
+  transform: scaleY(0); opacity: 0;
+  transition: transform 180ms var(--bh-ease), opacity 180ms var(--bh-ease);
+}
+aside nav a[aria-current="page"]::before { transform: scaleY(1); opacity: 1; }
+
+/* ---------- 4. General micro-interactions ---------- */
+button, [role="button"], a.btn, input[type="submit"] {
+  transition-property: background-color, border-color, color, box-shadow, opacity;
+  transition-duration: 120ms;
+  transition-timing-function: var(--bh-ease);
+}
+/* Pressed state: immediate, no scale */
+button:not(:disabled):active { transition-duration: 0ms; }
+button:disabled { cursor: not-allowed; }
+
+input, select, textarea {
+  transition: border-color var(--bh-dur-micro) var(--bh-ease),
+              box-shadow var(--bh-dur-micro) var(--bh-ease),
+              background-color var(--bh-dur-micro) var(--bh-ease);
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus-visible,
+select:focus-visible, textarea:focus-visible {
+  border-color: var(--bh-orange);
+}
+
+input[type="checkbox"], input[type="radio"] {
+  accent-color: var(--bh-orange);
+}
+
+/* Tabs */
+[role="tab"] { transition: color var(--bh-dur-micro) var(--bh-ease), border-color var(--bh-dur-micro) var(--bh-ease), background-color var(--bh-dur-micro) var(--bh-ease); }
+[role="tabpanel"]:not(.hidden) { animation: bh-fade-in 100ms var(--bh-ease) both; }
+
+/* Selectable cards (cards that are clickable) */
+.cursor-pointer.border, label.border:has(input) {
+  transition: border-color 120ms var(--bh-ease),
+              box-shadow 120ms var(--bh-ease),
+              background-color 120ms var(--bh-ease);
+}
+
+/* Dropdowns / popovers: opacity only */
+[id*="dropdown" i]:not(.hidden), [id*="menu" i].absolute:not(.hidden), [popover]:popover-open {
+  animation: bh-fade-in 100ms var(--bh-ease) both;
+}
+
+/* Modals: entrance only (closing stays instant), opacity + 2px lift, no scale */
+.fixed.inset-0:not(.hidden):not(.pointer-events-none) { animation: bh-fade-in 120ms var(--bh-ease) both; }
+.fixed.inset-0:not(.hidden):not(.pointer-events-none) > div:not(.absolute) { animation: bh-modal-in 120ms var(--bh-ease) both; }
+dialog[open] { animation: bh-modal-in 120ms var(--bh-ease) both; }
+dialog[open]::backdrop { animation: bh-fade-in 120ms var(--bh-ease) both; }
+@keyframes bh-modal-in { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: none; } }
+
+/* Toasts */
+[id^="toast" i] {
+  transition: opacity 140ms var(--bh-ease), transform 140ms var(--bh-ease) !important;
+}
+[id^="toast" i].opacity-0 { transform: translateY(4px); }
+[id^="toast" i].opacity-100 { transform: none; }
+
+/* ---------- 5. Login ---------- */
+.bh-login .bh-word-a { animation: bh-word 420ms var(--bh-ease-soft) 60ms both; }
+.bh-login .bh-word-b { animation: bh-word 420ms var(--bh-ease-soft) 220ms both; }
+@keyframes bh-word { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.bh-login .bh-geo { animation: bh-fade-in 900ms var(--bh-ease) 100ms both; }
+.bh-login .bh-geo-line { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: bh-draw 1100ms var(--bh-ease) 200ms forwards; }
+.bh-login .bh-anchor { transform-origin: left; animation: bh-grow 360ms var(--bh-ease) 380ms both; }
+.bh-login .bh-card { animation: bh-fade-in 200ms var(--bh-ease) 80ms both; }
+@keyframes bh-draw { to { stroke-dashoffset: 0; } }
+@keyframes bh-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+#togglePasswordBtn .material-symbols-outlined { transition: transform 150ms var(--bh-ease), color 150ms var(--bh-ease); display: inline-block; }
+#togglePasswordBtn:hover .material-symbols-outlined { color: var(--bh-orange); }
+#togglePasswordBtn:active .material-symbols-outlined { transform: scale(0.88); }
+.bh-icon-swap { animation: bh-fade-in 150ms var(--bh-ease); }
+
+#submitBtn:not(:disabled):hover { box-shadow: 0 4px 14px -6px rgba(255, 122, 0, 0.55); }
+#submitBtn:disabled { cursor: progress; }
+.bh-spinner {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.35); border-top-color: #FFFFFF;
+  animation: bh-spin 700ms linear infinite; display: inline-block;
+}
+.bh-spinner.hidden { display: none; }
+@keyframes bh-spin { to { transform: rotate(360deg); } }
+
+
+/* ---------- 7. Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .bh-login .bh-geo-line { stroke-dashoffset: 0; }
+  .bh-spinner { animation: bh-spin 1.2s linear infinite !important; animation-duration: 1.2s !important; animation-iteration-count: infinite !important; }
+}

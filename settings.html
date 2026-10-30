@@ -1,0 +1,352 @@
+\<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pengaturan - BarberHub POS</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#FF7A00',
+              hover: '#E66E00',
+              light: '#FFF4EB',
+              tint: '#FFE2CC'
+            },
+            surface: {
+              base: '#F5F5F5',
+              card: '#FFFFFF',
+              muted: '#FAFAFA'
+            },
+            charcoal: {
+              900: '#1A1A1A',
+              700: '#383838',
+              500: '#737373',
+              300: '#D4D4D4',
+              100: '#EBEBEB'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<link rel="stylesheet" href="assets/motion.css"/>
+<script src="assets/shell.js"></script>
+<script src="assets/motion.js"></script>
+</head>
+<body class="bg-surface-base text-charcoal-900 font-sans antialiased min-h-screen flex selection:bg-brand-light selection:text-brand">
+<!-- Desktop Navigation Sidebar -->
+<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between bg-surface-card border-r border-charcoal-100 z-50 select-none">
+<!-- Header: Branding -->
+<div class="flex flex-col">
+<div class="px-5 pt-5 pb-5 border-b border-charcoal-100 flex items-center gap-3">
+  <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-display font-bold text-lg shadow-sm">
+    B
+  </div>
+  <div class="flex flex-col">
+    <span class="font-display font-bold text-charcoal-900 tracking-tight leading-tight">BarberHub POS</span>
+  </div>
+</div>
+<!-- Navigation Tab Links -->
+<nav class="px-3 py-4 flex flex-col gap-1">
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-charcoal-700 text-sm font-medium hover:bg-surface-base hover:text-charcoal-900 transition-colors" href="dashboard.html"><span class="material-symbols-outlined text-[20px] text-charcoal-500">dashboard</span><span>Dashboard</span></a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-charcoal-700 text-sm font-medium hover:bg-surface-base hover:text-charcoal-900 transition-colors" href="cashier.html"><span class="material-symbols-outlined text-[20px] text-charcoal-500">shopping_cart</span><span>Transaksi</span></a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-charcoal-700 text-sm font-medium hover:bg-surface-base hover:text-charcoal-900 transition-colors" href="management.html"><span class="material-symbols-outlined text-[20px] text-charcoal-500">inventory_2</span><span>Manajemen</span></a>
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-charcoal-700 text-sm font-medium hover:bg-surface-base hover:text-charcoal-900 transition-colors" href="history.html"><span class="material-symbols-outlined text-[20px] text-charcoal-500">history</span><span>Riwayat</span></a>
+</nav>
+</div>
+<!-- Footer Area: Active Pengaturan & Keluar -->
+<div class="px-3 pb-4 pt-2 border-t border-charcoal-100 flex flex-col gap-1">
+  <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-light text-brand text-sm font-semibold transition-colors" href="settings.html"><span class="material-symbols-outlined text-[20px] fill text-brand">settings</span><span>Pengaturan</span></a>
+  <a href="login.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-charcoal-700 text-sm font-medium hover:bg-surface-base hover:text-red-600 transition-colors"><span class="material-symbols-outlined text-[20px] text-charcoal-500">logout</span><span>Keluar</span></a>
+</div>
+</aside>
+<!-- Main View Container -->
+<div class="flex-1 ml-64 min-h-screen flex flex-col bg-surface-base">
+<!-- Top App Bar Navigation Anchor -->
+<header class="w-full h-16 px-8 flex items-center justify-between bg-surface-card border-b border-charcoal-100 sticky top-0 z-40">
+<div class="flex items-center gap-2 text-[14px] font-medium">
+<span class="text-[#737373] font-normal">BarberHub POS</span>
+<span class="material-symbols-outlined text-[16px] text-[#737373]">chevron_right</span>
+<span class="text-[#1A1A1A] font-medium">Pengaturan</span>
+</div>
+<div class="flex items-center gap-4">
+
+<div class="h-4 w-px bg-charcoal-100"></div>
+<div class="flex items-center gap-2.5">
+
+<div class="flex flex-col text-left">
+
+
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content Workspace: Stacked Editorial Dossier Layout (860px max width centered) -->
+<main class="flex-1 py-10 px-6 sm:px-10">
+<div class="max-w-[860px] mx-auto space-y-8">
+<!-- Header: Editorial Dossier Title -->
+<div class="space-y-1.5 pb-2">
+
+<h1 class="font-display text-3xl font-bold tracking-tight text-charcoal-900">Pengaturan</h1>
+<p class="text-sm text-charcoal-500 font-normal">Kelola informasi cabang dan akun Anda.</p>
+</div>
+<!-- STACK 1: Informasi Cabang (Dossier Record) -->
+<section class="bg-surface-card rounded-2xl border border-charcoal-100 shadow-[0_2px_8px_rgba(0,0,0,0.03)] overflow-hidden transition-all">
+<div class="px-7 py-5 border-b border-charcoal-100 bg-surface-muted flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-card border border-charcoal-100 flex items-center justify-center text-charcoal-700 shadow-2xs">
+<span class="material-symbols-outlined text-[19px]">domain</span>
+</div>
+<div>
+<h2 class="font-display font-semibold text-base text-charcoal-900">Informasi Cabang</h2>
+<p class="text-xs text-charcoal-500">Detail identitas lokasi dan status operasional aktif</p>
+</div>
+</div>
+
+</div>
+<!-- Horizontal key-value row presentation with hairline dividers -->
+<div class="divide-y divide-charcoal-100 px-7">
+<!-- Row 1: Nama Cabang -->
+<div class="py-4 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-center">
+<span class="sm:col-span-4 text-xs font-semibold text-charcoal-500 uppercase tracking-wider">Nama Cabang</span>
+<div class="sm:col-span-8 flex items-center justify-between">
+<span class="text-sm font-medium text-charcoal-900">BarberHub Senopati</span>
+
+</div>
+</div>
+<!-- Row 2: Alamat Cabang -->
+<div class="py-4 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-start">
+<span class="sm:col-span-4 text-xs font-semibold text-charcoal-500 uppercase tracking-wider pt-0.5">Alamat Cabang</span>
+<div class="sm:col-span-8">
+<p class="text-sm font-medium text-charcoal-900 leading-relaxed">Jl. Senopati No. 45, Kebayoran Baru, Jakarta Selatan</p>
+<span class="inline-block text-xs text-charcoal-500 mt-1">DKI Jakarta 12190</span>
+</div>
+</div>
+<!-- Row 3: Status Operasional -->
+
+</div>
+</section>
+<!-- STACK 2: Akun Saya (Interactive Profile & Password Dossier) -->
+<section class="bg-surface-card rounded-2xl border border-charcoal-100 shadow-[0_2px_8px_rgba(0,0,0,0.03)] overflow-hidden transition-all">
+<div class="px-7 py-5 border-b border-charcoal-100 bg-surface-muted flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-card border border-charcoal-100 flex items-center justify-center text-charcoal-700 shadow-2xs">
+<span class="material-symbols-outlined text-[19px]">account_circle</span>
+</div>
+<div>
+<h2 class="font-display font-semibold text-base text-charcoal-900">Akun Saya</h2>
+<p class="text-xs text-charcoal-500">Informasi identitas kasir dan kredensial keamanan login</p>
+</div>
+</div>
+</div>
+<div class="p-7 space-y-6">
+<!-- Account Identity Row -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-surface-muted border border-charcoal-100">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-charcoal-900 text-white font-display font-bold text-base flex items-center justify-center tracking-tight shadow-sm">
+                  KS
+                </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-display font-semibold text-base text-charcoal-900">kasir.senopati</span>
+
+</div>
+<p class="text-xs text-charcoal-500 mt-0.5">Sesi login diautentikasi untuk operasional kasir cabang</p>
+</div>
+</div>
+<!-- Action button: Ganti Kata Sandi -->
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border-2 border-brand text-brand font-semibold text-xs sm:text-sm hover:bg-brand hover:text-white transition-all active:scale-[0.98]" id="btn-toggle-password" onclick="togglePasswordAccordion()" type="button">
+<span class="material-symbols-outlined text-[18px]">key</span>
+<span class="">Ganti Kata Sandi</span>
+</button>
+</div>
+<!-- Interactive Password Form (Expandable Dossier Panel) -->
+<div class="hidden transition-all duration-300 ease-in-out border border-charcoal-100 rounded-xl bg-surface-muted/40 p-5 sm:p-6" id="password-accordion">
+<div class="flex items-center justify-between pb-4 mb-5 border-b border-charcoal-100">
+<div>
+<h3 class="font-display font-semibold text-sm text-charcoal-900">Perbarui Kata Sandi</h3>
+<p class="text-xs text-charcoal-500 mt-0.5">Pastikan kata sandi baru kuat dan dirahasiakan.</p>
+</div>
+<button class="text-charcoal-500 hover:text-charcoal-900 p-1" onclick="togglePasswordAccordion()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Form Submission -->
+<form class="space-y-4" id="password-form" onsubmit="event.preventDefault(); handlePasswordChange();">
+<!-- Feedback Notification Alert -->
+<div class="hidden p-3.5 rounded-xl text-xs font-medium items-center gap-2.5" id="form-feedback"></div>
+<!-- Input: Kata Sandi Saat Ini -->
+<div>
+<label class="block text-xs font-semibold text-charcoal-700 uppercase tracking-wider mb-1.5" for="current-pw">
+                    Kata Sandi Saat Ini
+                  </label>
+<div class="relative flex items-center">
+<input class="w-full bg-white border border-charcoal-300 text-charcoal-900 text-sm rounded-xl px-3.5 py-2.5 pr-11 focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-colors" id="current-pw" placeholder="Masukkan kata sandi saat ini" required="" type="password">
+<button aria-label="Toggle password visibility" class="absolute right-3 text-charcoal-500 hover:text-charcoal-900 focus:outline-none p-1 transition-colors" onclick="togglePasswordVisibility('current-pw', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Input: Kata Sandi Baru -->
+<div>
+<label class="block text-xs font-semibold text-charcoal-700 uppercase tracking-wider mb-1.5" for="new-pw">
+                    Kata Sandi Baru
+                  </label>
+<div class="relative flex items-center">
+<input class="w-full bg-white border border-charcoal-300 text-charcoal-900 text-sm rounded-xl px-3.5 py-2.5 pr-11 focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-colors" id="new-pw" placeholder="Minimal 8 karakter kombinasi huruf &amp; angka" required="" type="password">
+<button aria-label="Toggle password visibility" class="absolute right-3 text-charcoal-500 hover:text-charcoal-900 focus:outline-none p-1 transition-colors" onclick="togglePasswordVisibility('new-pw', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Input: Konfirmasi Kata Sandi Baru -->
+<div>
+<label class="block text-xs font-semibold text-charcoal-700 uppercase tracking-wider mb-1.5" for="confirm-pw">
+                    Konfirmasi Kata Sandi Baru
+                  </label>
+<div class="relative flex items-center">
+<input class="w-full bg-white border border-charcoal-300 text-charcoal-900 text-sm rounded-xl px-3.5 py-2.5 pr-11 focus:border-brand focus:ring-1 focus:ring-brand outline-none transition-colors" id="confirm-pw" placeholder="Ketik ulang kata sandi baru" required="" type="password">
+<button aria-label="Toggle password visibility" class="absolute right-3 text-charcoal-500 hover:text-charcoal-900 focus:outline-none p-1 transition-colors" onclick="togglePasswordVisibility('confirm-pw', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Action CTA: Simpan Perubahan -->
+<div class="pt-2 flex items-center justify-end gap-3">
+<button class="px-4 py-2.5 rounded-xl border border-charcoal-300 bg-white text-charcoal-700 text-xs sm:text-sm font-semibold hover:bg-surface-base transition-colors" onclick="togglePasswordAccordion()" type="button">
+                    Batal
+                  </button>
+<button class="px-5 py-2.5 rounded-xl bg-brand hover:bg-brand-hover text-white text-xs sm:text-sm font-semibold transition-all shadow-sm active:scale-[0.98] inline-flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="">Simpan Perubahan</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- STACK 3: Tentang Aplikasi (Minimal Dossier Footer Card) -->
+<section class="bg-surface-card rounded-2xl border border-charcoal-100 p-6 sm:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="font-display font-bold text-sm text-charcoal-900">BarberHub POS</span>
+<span class="text-charcoal-300">•</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-charcoal-100 text-charcoal-700">v1.0.0</span>
+</div>
+<p class="text-xs text-charcoal-500">Sistem manajemen transaksi dan operasional BarberHub.</p>
+</div>
+<div class="text-left sm:text-right space-y-0.5">
+<p class="text-[11px] text-charcoal-500">© 2026 BarberHub POS</p>
+<div class="inline-flex items-center gap-1.5 text-[10px] text-charcoal-500 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+                Build Engine: POS-Core v4.8
+              </div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Interactive Logic -->
+<script>
+    function togglePasswordAccordion() {
+      const panel = document.getElementById('password-accordion');
+      const isHidden = panel.classList.contains('hidden');
+      if (isHidden) {
+        panel.classList.remove('hidden');
+        document.getElementById('current-pw').focus();
+      } else {
+        panel.classList.add('hidden');
+        resetFeedback();
+      }
+    }
+
+    function togglePasswordVisibility(fieldId, btnEl) {
+      const input = document.getElementById(fieldId);
+      const icon = btnEl.querySelector('.material-symbols-outlined');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    function resetFeedback() {
+      const fb = document.getElementById('form-feedback');
+      fb.className = 'hidden';
+      fb.innerHTML = '';
+    }
+
+    function handlePasswordChange() {
+      const current = document.getElementById('current-pw').value;
+      const newPw = document.getElementById('new-pw').value;
+      const confirmPw = document.getElementById('confirm-pw').value;
+      const feedback = document.getElementById('form-feedback');
+
+      if (newPw.length < 8) {
+        feedback.className = 'p-3.5 rounded-xl text-xs font-medium flex items-center gap-2.5 bg-red-50 text-red-700 border border-red-200';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span> Kata sandi baru minimal harus 8 karakter kombinasi.';
+        return;
+      }
+
+      if (newPw !== confirmPw) {
+        feedback.className = 'p-3.5 rounded-xl text-xs font-medium flex items-center gap-2.5 bg-red-50 text-red-700 border border-red-200';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span> Konfirmasi kata sandi tidak sesuai dengan kata sandi baru.';
+        return;
+      }
+
+      // Berhasil
+      feedback.className = 'p-3.5 rounded-xl text-xs font-medium flex items-center gap-2.5 bg-emerald-50 text-emerald-800 border border-emerald-200';
+      feedback.innerHTML = '<span class="material-symbols-outlined text-[18px] text-emerald-600">check_circle</span> Kata sandi akun berhasil diubah dan disimpan!';
+
+      document.getElementById('password-form').reset();
+      
+      // Kembalikan ikon visibility ke default
+      document.querySelectorAll('#password-form .material-symbols-outlined').forEach(icon => {
+        if (icon.textContent === 'visibility_off') {
+          icon.textContent = 'visibility';
+        }
+      });
+      document.querySelectorAll('#password-form input').forEach(input => {
+        input.type = 'password';
+      });
+
+      setTimeout(() => {
+        const panel = document.getElementById('password-accordion');
+        if (!panel.classList.contains('hidden')) {
+          panel.classList.add('hidden');
+          resetFeedback();
+        }
+      }, 2500);
+    }
+  </script>
+
+
+
+
+</body></html>

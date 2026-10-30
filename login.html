@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Masuk — BarberHub POS</title>
+<!-- Google Fonts: Space Grotesk & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            charcoal: '#1A1A1A',
+            matte: '#161616',
+            matteInput: '#1F1F1F',
+            matteBorder: '#262626',
+            primaryOrange: '#FF7A00',
+            orangeHover: '#E56D00',
+            textMuted: '#737373'
+          },
+          fontFamily: {
+            headline: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+<link rel="stylesheet" href="assets/motion.css"/>
+<script src="assets/motion.js"></script>
+</head>
+<body class="bh-login bg-[#F8F9FA] text-[#111827] font-body min-h-screen antialiased selection:bg-primaryOrange selection:text-white flex flex-col justify-center">
+<!-- Monolith Layout: Offset Asymmetrical Grid with Architectural Left Column -->
+<main class="w-full min-h-screen flex flex-col lg:flex-row relative overflow-hidden">
+<!-- LEFT SIDE: Stark Architectural Column & Stacked High-Contrast Wordmark Monolith -->
+<div class="relative w-full lg:w-[54%] xl:w-[52%] flex flex-col justify-between p-8 sm:p-14 lg:p-20 xl:p-24 border-b lg:border-b-0 lg:border-r border-[#E5E7EB] bg-[#FAFAFA]">
+<!-- Architectural Shear Intersection & Precision Guidelines -->
+<div aria-hidden="true" class="bh-geo absolute inset-0 pointer-events-none select-none overflow-hidden">
+<svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg"><line stroke="#E5E7EB" stroke-width="1" x1="15%" x2="15%" y1="0" y2="100%"></line><line class="bh-geo-line" stroke="#E5E7EB" stroke-width="1" x1="5%" x2="90%" y1="80%" y2="5%"></line><line stroke="#D1D5DB" stroke-dasharray="4 6" stroke-width="1" x1="15%" x2="85%" y1="52%" y2="52%"></line><circle cx="15%" cy="52%" fill="#FF7A00" r="3"></circle><line stroke="#FF7A00" stroke-width="1.5" x1="15%" x2="15%" y1="52%" y2="57%"></line></svg>
+</div>
+<!-- Header Grid Metric Mark (Minimal structural line) -->
+<div class="relative z-10 hidden sm:flex items-center gap-3">
+<div class="w-2 h-2 bg-primaryOrange"></div>
+<div class="w-16 h-[1px] bg-[#E5E7EB]"></div>
+</div>
+<!-- Core Monolith Wordmark: Giant Stacked Typography -->
+<div class="relative z-10 my-auto py-12 lg:py-0">
+<div class="flex flex-col font-headline font-extrabold tracking-[-0.04em] leading-[0.88] select-none text-6xl sm:text-7xl md:text-8xl lg:text-[104px] xl:text-[124px]">
+<span class="bh-word-a text-[#111827] tracking-tight">BARBER</span>
+<span class="bh-word-b text-primaryOrange mt-1 sm:mt-2">HUB</span>
+</div>
+<!-- Architectural Anchor Bar -->
+<div class="mt-8 flex items-center gap-4"><div class="bh-anchor w-16 h-[3px] bg-primaryOrange"></div><div class="w-2 h-2 border border-[#9CA3AF] rotate-45"></div><div class="w-32 h-[1px] bg-[#E5E7EB]"></div></div>
+</div>
+<!-- Footer Micro Axis Mark -->
+<div class="relative z-10 hidden sm:flex items-center gap-2"><div class="w-20 h-[1px] bg-[#E5E7EB]"></div><div class="w-1 h-1 bg-[#D1D5DB]"></div></div>
+</div>
+<!-- RIGHT SIDE: Recessed High-Contrast Matte Surface & Login Form -->
+<div class="w-full lg:w-[46%] xl:w-[48%] flex items-center justify-center p-6 sm:p-12 lg:p-16 xl:p-24 relative z-10 bg-[#F8F9FA]">
+<div class="bh-card w-full max-w-[400px] bg-white border border-[#E5E7EB] rounded-none p-8 sm:p-12 shadow-sm relative">
+<!-- Recessed Accent Corner Notch -->
+<div class="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-primaryOrange"></div>
+<!-- Header -->
+<div class="mb-9"><h1 class="font-headline font-bold text-2xl sm:text-3xl text-[#111827] tracking-tight mb-2">Selamat Datang</h1><p class="text-[#6B7280] text-sm font-normal">Masuk ke akun Anda.</p></div>
+<!-- Form -->
+<form class="space-y-6" id="loginForm" novalidate="" onsubmit="handleSubmit(event)">
+<!-- Username Input -->
+<div>
+<label class="block font-headline text-xs font-bold uppercase tracking-wider text-[#374151] mb-2.5" for="username">
+              Username
+            </label>
+<div class="relative">
+<input autocomplete="username" class="w-full bg-[#F9FAFB] border border-[#D1D5DB] rounded-none text-[#111827] text-sm px-4 py-3.5 placeholder:text-[#9CA3AF] focus:outline-none focus:bg-white focus:border-primaryOrange focus:ring-1 focus:ring-primaryOrange transition duration-150" id="username" name="username" placeholder="Username Anda" required="" type="text"/>
+</div>
+<p class="hidden mt-1.5 text-xs text-red-500 font-medium" id="usernameError">
+              Username wajib diisi.
+            </p>
+</div>
+<!-- Password Input -->
+<div>
+<label class="block font-headline text-xs font-bold uppercase tracking-wider text-[#374151] mb-2.5" for="password">
+              Kata Sandi
+            </label>
+<div class="relative">
+<input autocomplete="current-password" class="w-full bg-[#F9FAFB] border border-[#D1D5DB] rounded-none text-[#111827] text-sm pl-4 pr-11 py-3.5 placeholder:text-[#9CA3AF] focus:outline-none focus:bg-white focus:border-primaryOrange focus:ring-1 focus:ring-primaryOrange transition duration-150" id="password" name="password" placeholder="Kata sandi Anda" required="" type="password"/>
+<button aria-label="Tampilkan atau sembunyikan kata sandi" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#6B7280] hover:text-[#111827] transition-colors focus:outline-none cursor-pointer" id="togglePasswordBtn" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="passwordIcon">visibility</span>
+</button>
+</div>
+<p class="hidden mt-1.5 text-xs text-red-500 font-medium" id="passwordError">
+              Kata sandi wajib diisi.
+            </p>
+</div>
+<!-- Primary Submit Button -->
+<div class="pt-2">
+<button class="w-full bg-primaryOrange hover:bg-orangeHover active:scale-[0.99] text-white font-headline font-bold text-sm tracking-widest uppercase py-4 px-6 rounded-none transition duration-150 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-primaryOrange focus:ring-offset-2 focus:ring-offset-white cursor-pointer" id="submitBtn" type="submit">
+<span aria-hidden="true" class="bh-spinner hidden" id="submitSpinner"></span>
+<span id="submitBtnText">Masuk</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<!-- Interactive Logic -->
+<script>
+    const passwordInput = document.getElementById('password');
+    const passwordIcon = document.getElementById('passwordIcon');
+    const usernameInput = document.getElementById('username');
+    const usernameError = document.getElementById('usernameError');
+    const passwordError = document.getElementById('passwordError');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitBtnText = document.getElementById('submitBtnText');
+    const submitSpinner = document.getElementById('submitSpinner');
+
+    function togglePassword() {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordIcon.textContent = 'visibility_off';
+      } else {
+        passwordInput.type = 'password';
+        passwordIcon.textContent = 'visibility';
+      }
+      passwordIcon.classList.remove('bh-icon-swap');
+      void passwordIcon.offsetWidth;
+      passwordIcon.classList.add('bh-icon-swap');
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      if (submitBtn.disabled) return; // prevent repeated submissions
+      
+      let isValid = true;
+      const usernameVal = usernameInput.value.trim();
+      const passwordVal = passwordInput.value;
+
+      if (!usernameVal) {
+        usernameError.classList.remove('hidden');
+        usernameInput.classList.add('border-red-500');
+        isValid = false;
+      } else {
+        usernameError.classList.add('hidden');
+        usernameInput.classList.remove('border-red-500');
+      }
+
+      if (!passwordVal) {
+        passwordError.classList.remove('hidden');
+        passwordInput.classList.add('border-red-500');
+        isValid = false;
+      } else {
+        passwordError.classList.add('hidden');
+        passwordInput.classList.remove('border-red-500');
+      }
+
+      if (isValid) {
+        submitBtn.disabled = true;
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitSpinner.classList.remove('hidden');
+        submitBtnText.textContent = 'Memproses...';
+        
+        setTimeout(() => {
+          submitSpinner.classList.add('hidden');
+          submitBtnText.textContent = 'Berhasil';
+          submitBtn.classList.remove('bg-primaryOrange');
+          submitBtn.classList.add('bg-emerald-600');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 600);
+        }, 600);
+      }
+    }
+
+    usernameInput.addEventListener('input', () => {
+      if (usernameInput.value.trim()) {
+        usernameError.classList.add('hidden');
+        usernameInput.classList.remove('border-red-500');
+      }
+    });
+
+    passwordInput.addEventListener('input', () => {
+      if (passwordInput.value) {
+        passwordError.classList.add('hidden');
+        passwordInput.classList.remove('border-red-500');
+      }
+    });
+  </script>
+</body></html>
